@@ -1,4 +1,4 @@
-con## 1. Setting MySQL Server Docker Container
+## 1. Setting MySQL Server Docker Container
 ```bash
 # Pull the latest MySQL docker image (https://store.docker.com/images/mysql)
 docker pull mysql:8.0.3      # check available tags for more information
