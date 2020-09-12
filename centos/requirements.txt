@@ -1,0 +1,16 @@
+setuptools
+wheel
+pytz
+requests
+tabulate
+colorama
+future
+numpy
+pandas
+scipy
+scikit-learn
+matplotlib
+jupyterlab
+seaborn
+statsmodels
+sphinx
