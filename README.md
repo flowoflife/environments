@@ -135,3 +135,15 @@ python3 manage.py diffsettings
 python3 manage.py check
 python3 manage.py createsuperuser
 ```
+
+## 5. Creating environment package list
+```bash
+# create packgage list files
+pip list --format=freeze > pip_pkgs.txt
+conda list --explicit > conda_pkgs.txt
+
+# create new environment using package list files
+conda create --name NEWENV --file conda_pkgs.txt
+pip install -r pip_pkgs.txt
+
+```
