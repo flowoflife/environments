@@ -144,6 +144,7 @@ conda list --explicit > conda_pkgs.txt
 
 # create new environment using package list files
 conda create --name NEWENV --file conda_pkgs.txt
+conda activate NEWENV
 pip install -r pip_pkgs.txt
 
 ```
@@ -189,7 +190,7 @@ conda install jupyterlab-sos -c conda-forge
 jupyter labextension install transient-display-data
 jupyter labextension install jupyterlab-sos
 
-# Lab commands, should not install
+# Lab commands, no need, or should not install
 pip install jupyterlab_commands
 jupyter labextension install jupyterlab_commands
 jupyter serverextension enable --py --user jupyterlab_commands
@@ -207,7 +208,8 @@ jupyter labextension install @krassowski/jupyterlab_go_to_definition
 # Language server
 pip install jupyter-lsp
 jupyter labextension install @krassowski/jupyterlab-lsp 
-conda install -c conda-forge python-language-server r-languageserver
+pip install python-language-server
+R -e 'install.packages("languageserver")'
 # setting
 {
   "language_servers": {
@@ -237,13 +239,13 @@ jupyter serverextension enable --py --user jupyterlab_latex
 
 # Jupyter Lab Code Formatter
 pip install autopep8 rpy2
-R
-install.packages("formatR", repos = "http://cran.rstudio.com")
-install.packages("styler")
+R -e 'install.packages("formatR", repos = "http://cran.rstudio.com")'
+R -e 'install.packages("styler")'
 jupyter labextension install @ryantam626/jupyterlab_code_formatter
 pip install jupyterlab_code_formatter
 jupyter serverextension enable --py --user jupyterlab_code_formatter
-# using, error name rpy2 not defined in R
+# using
+%load_ext rpy2.ipython
 library(formatR)
 sessionInfo()
 library("styler")
@@ -313,5 +315,33 @@ jupyter serverextension disable jupyterlab_sql --sys-prefix
 # Rebuild
 jupyter lab clean
 jupyter lab build
+jupyter labextension list
+```
 
+## 7. Installation of other kernels in Jupyter
+
+```bash
+# Install Apache Spark Scala kernel
+# Prerequirement of Java installation and Apache Spark download
+pip install --user toree
+jupyter toree install --user --spark_home=~/Downloads/spark-3.0.1-bin-hadoop2.7.tgz
+
+# Bash kernel
+pip install ipykernel
+pip install bash_kernel
+python -m bash_kernel.install
+
+# R kernel
+conda install r-base r-essentials
+R
+install.packages('IRkernel')
+IRkernel::installspec()
+
+# C kernel
+pip install --user jupyter-c-kernel
+install_c_kernel --user
+
+# Kernel check
+jupyter kernelspec list
+jupyter kernelspec remove "kernel-name"
 ```
