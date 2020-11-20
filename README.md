@@ -147,3 +147,172 @@ conda create --name NEWENV --file conda_pkgs.txt
 pip install -r pip_pkgs.txt
 
 ```
+
+## 6. Setting Jupyter Lab extensions
+
+```bash
+# Manager
+jupyter labextension install @jupyter-widgets/jupyterlab-manager
+
+# Spark
+jupyter labextension install jupyterlab_spark
+
+# Table of content
+jupyter labextension install @jupyterlab/toc
+
+# Dash
+pip install "jupyterlab>=1.0" jupyterlab-dash==0.1.0a3
+jupyter labextension install jupyterlab-dash@0.1.0-alpha.3
+
+# ipympl %matplotlib widget
+pip install ipympl
+
+# Tensorboard, should not use
+jupyter labextension install jupyterlab_tensorboard
+
+# ipywidgets
+pip install ipywidgets
+jupyter nbextension enable --py --user widgetsnbextension
+
+# knowledgelab is outdated, should not install
+pip install knowledgelab
+jupyter labextension install knowledgelab
+
+# itkwidgets
+pip install itkwidgets
+jupyter labextension install @jupyter-widgets/jupyterlab-manager jupyter-matplotlib jupyterlab-datawidgets itkwidgets
+# using
+from itkwidgets import view
+view(image)
+
+# SOS
+conda install jupyterlab-sos -c condo-forge
+jupyter labextension install transient-display-data
+jupyter labextension install jupyterlab-sos
+
+# Lab commands, should not install
+pip install jupyterlab_commands
+jupyter labextension install jupyterlab_commands
+jupyter serverextension enable --py --user jupyterlab_commands
+
+# jupytext
+pip install jupytext
+
+# Jupiter lab sql is outdated, should not install
+pip install jupyterlab_sql
+jupyter serverextension enable jupyterlab_sql --py --user
+
+# Go to definition
+jupyter labextension install @krassowski/jupyterlab_go_to_definition 
+
+# Language server
+pip install jupyter-lsp
+jupyter labextension install @krassowski/jupyterlab-lsp 
+conda install -c conda-forge python-language-server r-languageserver
+# setting
+{
+  "language_servers": {
+    "pyls": {
+      "serverSettings": {
+        "pyls.plugins.pydocstyle.enabled": true,
+        "pyls.plugins.pyflakes.enabled": false,
+        "pyls.plugins.flake8.enabled": true
+      }
+    },
+    "r-languageserver": {
+      "serverSettings": {
+        "r.lsp.debug": false,
+        "r.lsp.diagnostics": false
+      }
+    }
+  }
+}
+
+# Error, should not install
+jupyter labextension install jupyterlab-drawio
+
+# Latex
+pip install jupyterlab_latex
+jupyter labextension install @jupyterlab/latex
+jupyter serverextension enable --py --user jupyterlab_latex
+
+# Jupyter Lab Code Formatter
+pip install autopep8 rpy2
+R
+install.packages("formatR", repos = "http://cran.rstudio.com")
+install.packages("styler")
+jupyter labextension install @ryantam626/jupyterlab_code_formatter
+pip install jupyterlab_code_formatter
+jupyter serverextension enable --py --user jupyterlab_code_formatter
+# using, error name rpy2 not defined in R
+library(formatR)
+sessionInfo()
+library("styler")
+# setting
+{
+    "autopep8": {
+        "max_line_length": 80,
+        "ignore": [
+            "E226",
+            "E302",
+            "E41",
+            "E402",
+            "E703"
+        ]
+    },
+    "styler": {
+        "math_token_spacing": {
+            "zero":["'^'"],
+            "one":["'+'", "'-'", "'*'","'/'"]
+        },
+        "reindention": {
+            "regex_pattern" : "^###",
+            "indention" : 0,
+            "comments_only" : true}
+    },
+    "formatR": {
+        "indent": 4,
+        "arrow": true,
+        "wrap": true,
+        "width_cutoff": 150
+    },
+    "preferences": {
+        "default_formatter": {
+            "python": "autopep8",
+            "r": "styler"
+        }
+    }
+}
+
+# Debugger
+jupyter labextension install @jupyterlab/debugger
+pip install xeus-python
+
+# Trouble-shooting
+# To uninstall and disable extensions
+jupyter labextension disable --py --user jupyterlab-drawio
+jupyter labextension uninstall jupyterlab-drawio 
+jupyter labextension disable --py --user jupyterlab_sql
+jupyter labextension uninstall jupyterlab_sql
+pip uninstall jupyterlab_commands
+jupyter labextension uninstall jupyterlab_commands
+jupyter serverextension disable --py --user jupyterlab_commands
+
+
+# Delete a line or set False of jupyterlab_commands extension in 
+# ~/.jupyter/jupyter_notebook_config.json
+
+# Delete file: page_config.json inside folder: 
+# ~/opt/miniconda3/envs/myenv/share/jupyter/lab/settings/
+
+# Dissable unwanted server extensions
+jupyter serverextension list
+jupyter serverextension disable jupyterlab_sql
+jupyter serverextension disable jupyterlab_sql --user
+jupyter serverextension disable jupyterlab_sql --sys-prefix
+
+# Rebuild
+jupyter lab clean
+jupyter lab build
+
+```
