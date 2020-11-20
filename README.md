@@ -186,7 +186,7 @@ from itkwidgets import view
 view(image)
 
 # SOS
-conda install jupyterlab-sos -c condo-forge
+conda install jupyterlab-sos -c conda-forge
 jupyter labextension install transient-display-data
 jupyter labextension install jupyterlab-sos
 
