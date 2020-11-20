@@ -160,9 +160,8 @@ jupyter labextension install jupyterlab_spark
 # Table of content
 jupyter labextension install @jupyterlab/toc
 
-# Dash
-pip install "jupyterlab>=1.0" jupyterlab-dash==0.1.0a3
-jupyter labextension install jupyterlab-dash@0.1.0-alpha.3
+# Ploty Jupyter Dash
+pip install jupyter-dash
 
 # ipympl %matplotlib widget
 pip install ipympl
@@ -180,7 +179,7 @@ jupyter labextension install knowledgelab
 
 # itkwidgets
 pip install itkwidgets
-jupyter labextension install @jupyter-widgets/jupyterlab-manager jupyter-matplotlib jupyterlab-datawidgets itkwidgets
+jupyter labextension install jupyter-matplotlib jupyterlab-datawidgets itkwidgets
 # using
 from itkwidgets import view
 view(image)
@@ -290,13 +289,13 @@ pip install xeus-python
 
 # Trouble-shooting
 # To uninstall and disable extensions
-jupyter labextension disable --py --user jupyterlab-drawio
+jupyter labextension disable jupyterlab-drawio
 jupyter labextension uninstall jupyterlab-drawio 
-jupyter labextension disable --py --user jupyterlab_sql
+jupyter labextension disable jupyterlab_sql
 jupyter labextension uninstall jupyterlab_sql
 pip uninstall jupyterlab_commands
 jupyter labextension uninstall jupyterlab_commands
-jupyter serverextension disable --py --user jupyterlab_commands
+jupyter serverextension disable jupyterlab_commands
 
 
 # Delete a line or set False of jupyterlab_commands extension in 
@@ -305,7 +304,7 @@ jupyter serverextension disable --py --user jupyterlab_commands
 # Delete file: page_config.json inside folder: 
 # ~/opt/miniconda3/envs/myenv/share/jupyter/lab/settings/
 
-# Dissable unwanted server extensions
+# Dissable server extensions
 jupyter serverextension list
 jupyter serverextension disable jupyterlab_sql
 jupyter serverextension disable jupyterlab_sql --user
