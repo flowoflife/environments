@@ -190,7 +190,7 @@ conda install jupyterlab-sos -c conda-forge
 jupyter labextension install transient-display-data
 jupyter labextension install jupyterlab-sos
 
-# Lab commands, no need, or should not install
+# Jupyter commands, no need
 pip install jupyterlab_commands
 jupyter labextension install jupyterlab_commands
 jupyter serverextension enable --py --user jupyterlab_commands
@@ -210,7 +210,7 @@ pip install jupyter-lsp
 jupyter labextension install @krassowski/jupyterlab-lsp 
 pip install python-language-server
 R -e 'install.packages("languageserver")'
-# setting
+# setting inside Jupyter
 {
   "language_servers": {
     "pyls": {
@@ -249,7 +249,7 @@ jupyter serverextension enable --py --user jupyterlab_code_formatter
 library(formatR)
 sessionInfo()
 library("styler")
-# setting
+# setting inside Jupyter
 {
     "autopep8": {
         "max_line_length": 80,
@@ -323,8 +323,8 @@ jupyter labextension list
 ```bash
 # Install Apache Spark Scala kernel
 # Prerequirement of Java installation and Apache Spark download
-pip install --user toree
-jupyter toree install --user --spark_home=~/Downloads/spark-3.0.1-bin-hadoop2.7.tgz
+pip install toree
+jupyter toree install --spark_home=~/Downloads/spark-3.0.1-bin-hadoop2.7.tgz
 
 # Bash kernel
 pip install ipykernel
@@ -332,13 +332,14 @@ pip install bash_kernel
 python -m bash_kernel.install
 
 # R kernel
-conda install r-base r-essentials
-R
-install.packages('IRkernel')
-IRkernel::installspec()
+# conda install r-base r-essentials
+conda install -c r r-irkernel
+# R
+# install.packages('IRkernel')
+# IRkernel::installspec()
 
 # C kernel
-pip install --user jupyter-c-kernel
+pip install jupyter-c-kernel
 install_c_kernel --user
 
 # Kernel check
