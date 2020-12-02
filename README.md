@@ -1,7 +1,7 @@
 ## 1. Setting MySQL Server Docker Container
 ```bash
 # Pull the latest MySQL docker image (https://store.docker.com/images/mysql)
-docker pull mysql:8.0.3      # check available tags for more information
+docker pull mysql:8.0.22      # check available tags for more information
 
 # Create instance of your MySQL server docker container
 docker run --restart always  \  
@@ -16,7 +16,7 @@ docker run --restart always  \
  -e MYSQL_DATABASE=my-database-name \   
  # set connection port of mysql server
  -p 3306:3306           \                                   
--d mysql:8.0.3              # docker mysql image and tag
+-d mysql:8.0.22             # docker mysql image and tag
                                       # Note: no bash here
 
 ```
@@ -210,24 +210,6 @@ pip install jupyter-lsp
 jupyter labextension install @krassowski/jupyterlab-lsp 
 pip install python-language-server
 R -e 'install.packages("languageserver")'
-# setting inside Jupyter
-{
-  "language_servers": {
-    "pyls": {
-      "serverSettings": {
-        "pyls.plugins.pydocstyle.enabled": true,
-        "pyls.plugins.pyflakes.enabled": false,
-        "pyls.plugins.flake8.enabled": true
-      }
-    },
-    "r-languageserver": {
-      "serverSettings": {
-        "r.lsp.debug": false,
-        "r.lsp.diagnostics": false
-      }
-    }
-  }
-}
 
 # Error, should not install
 jupyter labextension install jupyterlab-drawio
@@ -238,7 +220,7 @@ jupyter labextension install @jupyterlab/latex
 jupyter serverextension enable --py --user jupyterlab_latex
 
 # Jupyter Lab Code Formatter
-pip install autopep8 rpy2
+pip install autopep8 pylint rpy2
 R -e 'install.packages("formatR", repos = "http://cran.rstudio.com")'
 R -e 'install.packages("styler")'
 jupyter labextension install @ryantam626/jupyterlab_code_formatter
@@ -249,41 +231,6 @@ jupyter serverextension enable --py --user jupyterlab_code_formatter
 library(formatR)
 sessionInfo()
 library("styler")
-# setting inside Jupyter
-{
-    "autopep8": {
-        "max_line_length": 80,
-        "ignore": [
-            "E226",
-            "E302",
-            "E41",
-            "E402",
-            "E703"
-        ]
-    },
-    "styler": {
-        "math_token_spacing": {
-            "zero":["'^'"],
-            "one":["'+'", "'-'", "'*'","'/'"]
-        },
-        "reindention": {
-            "regex_pattern" : "^###",
-            "indention" : 0,
-            "comments_only" : true}
-    },
-    "formatR": {
-        "indent": 4,
-        "arrow": true,
-        "wrap": true,
-        "width_cutoff": 150
-    },
-    "preferences": {
-        "default_formatter": {
-            "python": "autopep8",
-            "r": "styler"
-        }
-    }
-}
 
 # Debugger
 jupyter labextension install @jupyterlab/debugger
@@ -345,4 +292,110 @@ install_c_kernel --user
 # Kernel check
 jupyter kernelspec list
 jupyter kernelspec remove "kernel-name"
+```
+
+## 8. Setting Jupyter Lab
+
+Go to Settings/Advanced Settings Editor:
+
+Terminal:
+
+```bash
+{    
+    "fontSize": 15,
+    "lineHeight": 1.2,
+    "scrollback": 200,
+    "shutdownOnClose": true
+}
+```
+
+Text editor:
+
+```bash
+{
+    "editorConfig": {
+        "autoClosingBrackets": true,
+        "fontFamily": null,
+        "fontSize": 15,
+        "lineHeight": 1.2,
+        "lineNumbers": true,
+        "lineWrap": "on",
+        "matchBrackets": true,
+        "readOnly": false,
+        "insertSpaces": true,
+        "tabSize": 4,
+        "wordWrapColumn": 80,
+        "rulers": [],
+        "codeFolding": true
+    }
+}
+```
+
+Language Server:
+```bash
+{
+  "language_servers": {
+    "pyls": {
+      "serverSettings": {
+        "pyls.plugins.pydocstyle.enabled": true,
+        "pyls.plugins.pyflakes.enabled": false,
+        "pyls.plugins.flake8.enabled": true
+      }
+    },
+    "r-languageserver": {
+      "serverSettings": {
+        "r.lsp.debug": false,
+        "r.lsp.diagnostics": false
+      }
+    }
+  }
+}
+```
+
+JupyterLab Code Formatter:
+```bash
+{
+    "autopep8": {
+        "max_line_length": 80,
+        "ignore": [
+            "E226",
+            "E302",
+            "E41",
+            "E402",
+            "E703"
+        ]
+    },
+    "styler": {
+        "math_token_spacing": {
+            "zero":["'^'"],
+            "one":["'+'", "'-'", "'*'","'/'"]
+        },
+        "reindention": {
+            "regex_pattern" : "^###",
+            "indention" : 0,
+            "comments_only" : true}
+    },
+    "formatR": {
+        "indent": 4,
+        "arrow": true,
+        "wrap": true,
+        "width_cutoff": 150
+    },
+    "preferences": {
+        "default_formatter": {
+            "python": "autopep8",
+            "r": "styler"
+        }
+    }
+}
+```
+
+Go to Users/you/.config, create pycodestyle file, insert content below
+
+```bash
+[pycodestyle]
+count = False
+ignore = E226,E302,E41,E402,E703
+max-line-length = 160
+statistics = True
 ```
