@@ -400,12 +400,28 @@ max-line-length = 160
 statistics = True
 ```
 
-## 9. Setting Mac OS X
+## 9. Install Homebrew and setting
+```bash
+# firstly install homebrew and other neccessary
+brew install wget
+brew install git
+chsh -s $(which git)
+# setting GSH keys
+git config --global user.name "Your Name Here"
+git config --global user.email "your_email@youremail.com"
+git config --global core.excludesfile ~/.gitignore
+
+# install zsh
+brew install zsh
+chsh -s $(which zsh)
+# setting oh my zsh, themes, plugins
+```
+
+## 10. Setting Macbook
 ```bash
 # install oh my zsh:
 git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh
 cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
-chsh -s $(which zsh)
 
 # install Powerline fonts:
 git clone https://github.com/powerline/fonts.git --depth=1
@@ -413,34 +429,79 @@ cd fonts
 ./install.sh
 cd ..
 rm -rf fonts
+# setting fonts in iTerm2 into Meslo LG L DZ for Powerline
 
 # install oh my zsh plugins:
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+# setting plugin in .zshrc, see .zshrcorig
+# zsh-syntax-highlighting is always the last plugin
+git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+git clone git@github.com:zsh-users/zsh-completions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-completions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
 # install java:
 brew tap adoptopenjdk/openjdk
 brew cask install adoptopenjdk11
 ```
 
-
-
-## 10. Using pyenv, virtualenvs, miniconda
+## 11. Creating python development environment
 
 ```bash
-# firstly install homebrew and other neccessary
-brew install wget
-brew install git
-chsh -s $(which git)
-brew install zsh
-chsh -s $(which zsh)
+# python 3.8.6
+brew install python@3.8
 
+# echo into .zshrc
+# see .zshrcorig
+export PATH="/usr/local/opt/python@3.8/bin:$PATH"
+export LDFLAGS="-L/usr/local/opt/python@3.8/lib"
+export PKG_CONFIG_PATH="/usr/local/opt/python@3.8/lib/pkgconfig"
+export PATH="/usr/local/opt/sqlite/bin:$PATH"
+export LDFLAGS="-L/usr/local/opt/sqlite/lib"
+export CPPFLAGS="-I/usr/local/opt/sqlite/include"
+export PKG_CONFIG_PATH="/usr/local/opt/sqlite/lib/pkgconfig"
+
+# check OpenSSL
+python3 -c "import ssl; print(ssl.OPENSSL_VERSION)"
+# return OpenSSL 1.1.1i
+
+# create virtual env
+python3 -m venv ~/path/to/envs/my-env
+
+# activate my-env
+source ~/path/to/envs/my-env/bin/activate
+
+# upgrade dependencies
+python3 -m pip install -U pip setuptools wheel
+
+# install tensorflow
+(my-env) pip install -U tensorflow
+
+# install nodejs
+pip install nodeenv
+nodeenv -p
+
+# check nodejs
+npm -v
+
+# build jupyter lab
+jupyter lab build
+
+# start jupyter lab
+jupyter lab
+
+# close my-env
+deactivate
+```
+
+## 12. Using pyenv, virtualenvs, miniconda
+
+Currently, there is problem of using pyenv with MacOS Bir Sur ver11.0.1.
+So should not use pyenv.
+
+```bash
 # install pyenv using homebrew
 brew install pyenv
 echo 'if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv init -)"; fi' >> ~/.zshrc
 source ~/.zshrc
-
-# install other dependencies for python
-brew install openssl readline sqlite3 xz zlib bzip2
 
 # install virtualenv
 brew install pyenv-virtualenv
