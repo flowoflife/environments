@@ -5,4 +5,4 @@ set hlsearch ignorecase incsearch smartcase
 set complete-=i lazyredraw
 set encoding=utf-8 linebreak
 syntax enable
-set wrap ruler wildmenu
+set wrap ruler wildmenu showcmd

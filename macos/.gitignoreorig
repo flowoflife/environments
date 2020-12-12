@@ -8,6 +8,7 @@ workspace*
 .Trash
 .bash_history
 .conda
+.docker
 .gitconfig
 .gitignore
 .ipython
