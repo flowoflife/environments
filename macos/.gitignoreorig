@@ -9,6 +9,7 @@ workspace*
 .bash_history
 .conda
 .gitconfig
+.gitignore
 .ipython
 .jupyter
 .license.swp
