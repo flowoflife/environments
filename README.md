@@ -4,18 +4,18 @@
 docker pull mysql:8.0.22      # check available tags for more information
 
 # Create instance of your MySQL server docker container
-docker run --restart always  \  
+docker run --restart always  \
 --network my-network-name \  # optional
 # set your mysql server container name
---name my-mysql-container-server-name \       
-# link your local database folder with container                                
--v ~/my/own/datadir:/var/lib/mysql/ \       
+--name my-mysql-container-server-name \
+# link your local database folder with container
+-v ~/my/own/datadir:/var/lib/mysql/ \
 # set your database password
--e MYSQL_ROOT_PASSWORD=my-secret-pw \  
+-e MYSQL_ROOT_PASSWORD=my-secret-pw \
 # set your database name, MySQL will create it automatically
- -e MYSQL_DATABASE=my-database-name \   
+ -e MYSQL_DATABASE=my-database-name \
  # set connection port of mysql server
- -p 3306:3306           \                                   
+ -p 3306:3306           \
 -d mysql:8.0.22             # docker mysql image and tag
                                       # Note: no bash here
 
@@ -81,8 +81,8 @@ Create project
 django-admin startproject project-name
 ```
 
-Move inside project folder and edit settings.py. 
-Change "ALLOWED_HOSTS = []" into ALLOWED_HOSTS = ['*'] (do not set this at production stage) 
+Move inside project folder and edit settings.py.
+Change "ALLOWED_HOSTS = []" into ALLOWED_HOSTS = ['*'] (do not set this at production stage)
 and set TIME_ZONE to match with local timezone.
 
 Try development server
@@ -109,21 +109,21 @@ Project_folder/
             admin.py
             apps.py
             models.py
-            views.py         
+            views.py
         project_name/
             __init__.py
             settings.py
             urls.py
             wsgi.py
         static/
-        templates/ 
-        .gitignore  
+        templates/
+        .gitignore
         db.sqlite3
         Dockerfile
         manage.py
         README.md
-        requirements.txt   
-``` 
+        requirements.txt
+```
 
 List of Django manage.py commands
 
@@ -203,11 +203,11 @@ pip install jupyterlab_sql
 jupyter serverextension enable jupyterlab_sql --py --user
 
 # Go to definition
-jupyter labextension install @krassowski/jupyterlab_go_to_definition 
+jupyter labextension install @krassowski/jupyterlab_go_to_definition
 
 # Language server
 pip install jupyter-lsp
-jupyter labextension install @krassowski/jupyterlab-lsp 
+jupyter labextension install @krassowski/jupyterlab-lsp
 pip install python-language-server
 R -e 'install.packages("languageserver")'
 
@@ -239,7 +239,7 @@ pip install xeus-python
 # Trouble-shooting
 # To uninstall and disable extensions
 jupyter labextension disable jupyterlab-drawio
-jupyter labextension uninstall jupyterlab-drawio 
+jupyter labextension uninstall jupyterlab-drawio
 jupyter labextension disable jupyterlab_sql
 jupyter labextension uninstall jupyterlab_sql
 pip uninstall jupyterlab_commands
@@ -247,10 +247,10 @@ jupyter labextension uninstall jupyterlab_commands
 jupyter serverextension disable jupyterlab_commands
 
 
-# Delete a line or set False of jupyterlab_commands extension in 
+# Delete a line or set False of jupyterlab_commands extension in
 # ~/.jupyter/jupyter_notebook_config.json
 
-# Delete file: page_config.json inside folder: 
+# Delete file: page_config.json inside folder:
 # ~/opt/miniconda3/envs/myenv/share/jupyter/lab/settings/
 
 # Dissable server extensions
@@ -301,7 +301,7 @@ Go to Settings/Advanced Settings Editor:
 Terminal:
 
 ```bash
-{    
+{
     "fontSize": 15,
     "lineHeight": 1.2,
     "scrollback": 200,
@@ -398,4 +398,46 @@ count = False
 ignore = E226,E302,E41,E402,E703
 max-line-length = 160
 statistics = True
+```
+
+## 9. Using pyenv, virtualenvs, miniconda
+
+```bash
+# install pyenv using homebrew
+brew install pyenv
+echo 'if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv init -)"; fi' >> ~/.zshrc
+source ~/.zshrc
+
+# install other dependencies for python
+brew install openssl readline sqlite3 xz zlib
+
+# install virtualenv
+brew install pyenv-virtualenv
+echo 'if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi' >> ~/.zshrc
+source ~/.zshrc
+
+# using pyenv with virtualenv
+pyenv install 3.x.x
+pyenv virtualenv 3.x.x my-env
+pyenv shell my-env
+cd ~/to_project_folder
+# to start my-env automaticaly when cd into project folder
+pyenv local my-env
+pyenv shell --unset
+pyenv uninstall my-env
+pyenv uninstall 3.x.x
+
+# pyenv and miniconda
+pyenv install miniconda3.x.x
+pyenv shell miniconda3.x.x
+conda create -n my-env python==3.x.x
+conda activate my-env
+conda deactivate
+pyenv shell —-unset miniconda3.x.x
+pyenv uninstall my-env
+pyenv uninstall miniconda3.x.x
+
+# other pyenv commands
+pyenv install --list
+pyenv versions
 ```
