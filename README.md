@@ -400,16 +400,47 @@ max-line-length = 160
 statistics = True
 ```
 
-## 9. Using pyenv, virtualenvs, miniconda
+## 9. Setting Mac OS X
+```bash
+# install oh my zsh:
+git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh
+cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
+chsh -s $(which zsh)
+
+# install Powerline fonts:
+git clone https://github.com/powerline/fonts.git --depth=1
+cd fonts
+./install.sh
+cd ..
+rm -rf fonts
+
+# install oh my zsh plugins:
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+# install java:
+brew tap adoptopenjdk/openjdk
+brew cask install adoptopenjdk11
+```
+
+
+
+## 10. Using pyenv, virtualenvs, miniconda
 
 ```bash
+# firstly install homebrew and other neccessary
+brew install wget
+brew install git
+chsh -s $(which git)
+brew install zsh
+chsh -s $(which zsh)
+
 # install pyenv using homebrew
 brew install pyenv
 echo 'if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv init -)"; fi' >> ~/.zshrc
 source ~/.zshrc
 
 # install other dependencies for python
-brew install openssl readline sqlite3 xz zlib
+brew install openssl readline sqlite3 xz zlib bzip2
 
 # install virtualenv
 brew install pyenv-virtualenv
