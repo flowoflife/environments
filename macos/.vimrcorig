@@ -1,0 +1,8 @@
+set autoindent expandtab number
+filetype indent on
+set shiftwidth=4 smarttab tabstop=4 softtabstop=4
+set hlsearch ignorecase incsearch smartcase
+set complete-=i lazyredraw
+set encoding=utf-8 linebreak
+syntax enable
+set wrap ruler wildmenu
