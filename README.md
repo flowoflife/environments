@@ -144,6 +144,7 @@ conda list --explicit > conda_pkgs.txt
 
 # create new environment using package list files
 conda create --name NEWENV --file conda_pkgs.txt
+# or conda create --prefix /path/to/project/venv python==3.x.x
 conda activate NEWENV
 pip install -r pip_pkgs.txt
 
@@ -168,22 +169,22 @@ pip install jupyter-dash
 pip install ipympl
 
 # Tensorboard, should not use
-jupyter labextension install jupyterlab_tensorboard
+# jupyter labextension install jupyterlab_tensorboard
 
 # ipywidgets
 pip install ipywidgets
 jupyter nbextension enable --py --user widgetsnbextension
 
 # knowledgelab is outdated, should not install
-pip install knowledgelab
-jupyter labextension install knowledgelab
+# pip install knowledgelab
+# jupyter labextension install knowledgelab
 
 # itkwidgets
 pip install itkwidgets
 jupyter labextension install jupyter-matplotlib jupyterlab-datawidgets itkwidgets
 # using
-from itkwidgets import view
-view(image)
+# from itkwidgets import view
+# view(image)
 
 # SOS
 conda install jupyterlab-sos -c conda-forge
@@ -191,16 +192,16 @@ jupyter labextension install transient-display-data
 jupyter labextension install jupyterlab-sos
 
 # Jupyter commands, no need
-pip install jupyterlab_commands
-jupyter labextension install jupyterlab_commands
-jupyter serverextension enable --py --user jupyterlab_commands
+# pip install jupyterlab_commands
+# jupyter labextension install jupyterlab_commands
+# jupyter serverextension enable --py --user jupyterlab_commands
 
 # jupytext
 pip install jupytext
 
 # Jupiter lab sql is outdated, should not install
-pip install jupyterlab_sql
-jupyter serverextension enable jupyterlab_sql --py --user
+# pip install jupyterlab_sql
+# jupyter serverextension enable jupyterlab_sql --py --user
 
 # Go to definition
 jupyter labextension install @krassowski/jupyterlab_go_to_definition
@@ -209,10 +210,10 @@ jupyter labextension install @krassowski/jupyterlab_go_to_definition
 pip install jupyter-lsp
 jupyter labextension install @krassowski/jupyterlab-lsp
 pip install python-language-server
-R -e 'install.packages("languageserver")'
+# R -e 'install.packages("languageserver")'
 
 # Error, should not install
-jupyter labextension install jupyterlab-drawio
+# jupyter labextension install jupyterlab-drawio
 
 # Latex
 pip install jupyterlab_latex
@@ -220,17 +221,18 @@ jupyter labextension install @jupyterlab/latex
 jupyter serverextension enable --py --user jupyterlab_latex
 
 # Jupyter Lab Code Formatter
-pip install autopep8 pylint rpy2
-R -e 'install.packages("formatR", repos = "http://cran.rstudio.com")'
-R -e 'install.packages("styler")'
+pip install autopep8 pylint
+# pip install rpy2
+# R -e 'install.packages("formatR", repos = "http://cran.rstudio.com")'
+# R -e 'install.packages("styler")'
 jupyter labextension install @ryantam626/jupyterlab_code_formatter
 pip install jupyterlab_code_formatter
 jupyter serverextension enable --py --user jupyterlab_code_formatter
 # using
-%load_ext rpy2.ipython
-library(formatR)
-sessionInfo()
-library("styler")
+# %load_ext rpy2.ipython
+# library(formatR)
+# sessionInfo()
+# library("styler")
 
 # Debugger
 jupyter labextension install @jupyterlab/debugger
@@ -276,18 +278,18 @@ jupyter toree install --spark_home=~/Downloads/spark-3.0.1-bin-hadoop2.7.tgz
 # Bash kernel
 pip install ipykernel
 pip install bash_kernel
-python -m bash_kernel.install
+python3 -m bash_kernel.install
 
 # R kernel
 # conda install r-base r-essentials
-conda install -c r r-irkernel
+# conda install -c r r-irkernel
 # R
 # install.packages('IRkernel')
 # IRkernel::installspec()
 
 # C kernel
-pip install jupyter-c-kernel
-install_c_kernel --user
+# pip install jupyter-c-kernel
+# install_c_kernel --user
 
 # Kernel check
 jupyter kernelspec list
@@ -390,7 +392,7 @@ JupyterLab Code Formatter:
 }
 ```
 
-Go to Users/you/.config, create pycodestyle file, insert content below
+Go to /Users/you/.config, create pycodestyle file, insert content below
 
 ```bash
 [pycodestyle]
@@ -401,8 +403,10 @@ statistics = True
 ```
 
 ## 9. Install Homebrew and setting
+
 ```bash
 # firstly install homebrew and other neccessary
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew install wget
 brew install git
 chsh -s $(which git)
@@ -410,6 +414,9 @@ chsh -s $(which git)
 git config --global user.name "Your Name Here"
 git config --global user.email "your_email@youremail.com"
 git config --global core.excludesfile ~/.gitignore
+
+# install iTerm2
+brew install --cask iterm2
 
 # install zsh
 brew install zsh
@@ -440,10 +447,14 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 
 # install java:
 brew tap adoptopenjdk/openjdk
-brew cask install adoptopenjdk11
+brew install --cask adoptopenjdk11
 ```
 
 ## 11. Creating python development environment
+
+Creating environment using Homebrew is the best way. If you need specific version of python which is not provided by Homebrew, then you can choose to download python version you need and install from www.python.org site.
+
+Homebrew will put python3 into usr/local/opt folder, so it will not replace original python2 and python3 of MacOS. If you choose to install by yourself, your python3 will be installed into usr/local/bin folder, while python2 is still in usr/bin folder. So your python3.x may replace other python3.x version in usr/local/bin folder.
 
 ```bash
 # python 3.8.6
@@ -472,15 +483,16 @@ source ~/path/to/envs/my-env/bin/activate
 # upgrade dependencies
 python3 -m pip install -U pip setuptools wheel
 
-# install tensorflow
-(my-env) pip install -U tensorflow
+# install tensorflow and other packages
+pip install -r requirements.txt
 
 # install nodejs
-pip install nodeenv
+# pip install nodeenv
 nodeenv -p
 
 # check nodejs
-npm -v
+# npm -v
+nodejs -v
 
 # build jupyter lab
 jupyter lab build
@@ -492,7 +504,33 @@ jupyter lab
 deactivate
 ```
 
-## 12. Using pyenv, virtualenvs, miniconda
+## 12. Creating anaconda environment
+
+```bash
+brew install --cask anaconda
+cd /
+usr/local/anaconda3/bin/conda init zsh
+
+# close zsh window, open new window
+# you will see
+(base) ->
+
+# create anaconda virtual env at prefered location
+conda create --prefix /path/to/project/folder/env-name python==3.x.x
+conda activate /path/to/project/folder/env-name
+python3 -m pip install -U pip setuptools wheel
+
+# you will see
+(/path/to/project/folder/env-name) $
+
+# to come back with local python env
+(base) -> conda deactivate
+
+# check python env again
+which python3
+```
+
+## 13. Using pyenv, virtualenvs, miniconda
 
 Currently, there is problem of using pyenv with MacOS Bir Sur ver11.0.1.
 So should not use pyenv.
