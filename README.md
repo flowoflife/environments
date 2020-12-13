@@ -10,23 +10,23 @@ Next, install others and settings
 
 ```bash
 brew install wget
-brew install git
-chsh -s $(which git)
-# setting GSH keys
-git config --global user.name "Your Name Here"
-git config --global user.email "your_email@youremail.com"
-git config --global core.excludesfile ~/.gitignore
 
 # install iTerm2
 brew install --cask iterm2
+
+# install git
+brew install git
+chsh -s $(which git)
+# setting GSH keys and git
+git config --global user.name "Your Name Here"
+git config --global user.email "your_email@youremail.com"
+git config --global core.excludesfile ~/.gitignore
 
 # install zsh
 brew install zsh
 chsh -s $(which zsh)
 # setting oh my zsh, themes, plugins
-```
 
-```bash
 # install oh my zsh:
 git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh
 cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
@@ -46,18 +46,29 @@ git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/z
 git clone git@github.com:zsh-users/zsh-completions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-completions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
-# install java:
-brew tap adoptopenjdk/openjdk
-brew install --cask adoptopenjdk11
+# install jdk:
+brew install --cask oracle-jdk
+sudo ln -sfn /usr/local/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
+# check jdk
+which java
+
+# install VSCode
+brew install --cask visual-studio-code
+
+# install PyCharm CE
+brew install --cask pycharm-ce
+
+# install Open Office if neccessary
+brew install --cask openoffice
 ```
 
 ## 2. Creating python environment using venv
 
-Creating environment using Homebrew is the best way. If you need specific version of python which is not provided by Homebrew, then you can choose to download python version you need and install from www.python.org site.
+Creating environment using Homebrew is the best way for MacOS. If you need specific version of python which is not provided by Homebrew, then you can choose to download python version you need from www.python.org, then install it.
 
-Homebrew will put python3 into usr/local/opt folder, so it will not replace original python2 and python3 of MacOS. If you choose to install by yourself, your python3 will be installed into usr/local/bin folder, while python2 is still in usr/bin folder. So your python3.x may replace other python3.x version in usr/local/bin folder.
+Homebrew will put python3 into usr/local/opt folder, so it will not replace original python2 and python3 of MacOS. If you choose to install by yourself, your python3 will be installed into usr/local/bin folder, while python2 is still in usr/bin folder. So your python3.x may replace other python3.x version in usr/local/bin folder. I prefer to use Homebrew to install python.
 
-Creating virtual env using Homebrew and venv is always the first choice. The virtual env will work well in PyCharm because PyCharm has a step to setting virtual env. You just need to go to Python Interpreter and set virtual env by pointing to your env folder. VSCode cannot detect this venv virtual env automatically.
+Creating virtual env using Homebrew and anaconda is always my first choice. This part is about how to create env using venv, not anaconda. The venv env will work well in PyCharm because PyCharm has a step to setting virtual env. You just need to go to Python Interpreter and set virtual env by pointing to your env folder. VSCode cannot detect this venv virtual env automatically.
 
 Next part will show how to create env using Homebrew and anaconda. Creating virtual env using anaconda is good for VSCode and JupyterLab. VSCode can detect this conda virtual env automatically.
 
@@ -71,6 +82,8 @@ brew install python@3.8
 echo 'export PATH="/usr/local/opt/python@3.8/bin:$PATH"' >> ~/.zshrc
 echo 'export LDFLAGS="-L/usr/local/opt/python@3.8/lib"' >> ~/.zshrc
 echo 'export PKG_CONFIG_PATH="/usr/local/opt/python@3.8/lib/pkgconfig"' >> ~/.zshrc
+
+# you may not need these
 echo 'export PATH="/usr/local/opt/sqlite/bin:$PATH"' >> ~/.zshrc
 echo 'export LDFLAGS="-L/usr/local/opt/sqlite/lib"' >> ~/.zshrc
 echo 'export CPPFLAGS="-I/usr/local/opt/sqlite/include"' >> ~/.zshrc
@@ -95,7 +108,7 @@ pip install -r requirements.txt
 # just in case you have Jupyter Notebook
 # and you want to have nodejs for Notebook
 # install nodejs
-pip install nodeenv
+# pip install nodeenv
 nodeenv -p
 
 # check nodejs
@@ -114,28 +127,40 @@ deactivate
 
 ## 3. Creating python environment using anaconda
 
+Install anaconda
+
 ```bash
 brew install --cask anaconda
 cd /
 usr/local/anaconda3/bin/conda init zsh
-```
 
-```bash
 # close zsh window, open new window
 # you will see
 (base) ->
 ```
 
+Create virtual env
+
 ```bash
 # create anaconda virtual env at prefered location
-conda create --prefix /path/to/project/folder/env-name python==3.x.x
+conda create --prefix /path/to/project/folder/env-name --file conda_pkgs.txt
+# or conda create --prefix /path/to/project/folder/env-name python==3.x.x
 conda activate /path/to/project/folder/env-name
+# you will see
+(/path/to/project/folder/env-name) $
 
 # you may not need this
 python3 -m pip install -U pip setuptools wheel
 
-# you will see
-(/path/to/project/folder/env-name) $
+# install other packages
+pip install -r pip_pkgs.txt
+# or pip install -r requirements.txt
+
+# just in case you have Jupyter Notebook
+# and you want to have nodejs for Notebook
+# install nodejs
+# pip install nodeenv
+nodeenv -p
 
 # to come back with local python env
 (base) -> conda deactivate
@@ -147,9 +172,10 @@ which python3
 
 ## 4. Creating python environment using pyenv
 
-Currently, there is problem of using pyenv with MacOS Bir Sur ver11.0.1.
-So should not use pyenv.
+You will not need this if you already install anaconda, and know how to work with anaconda and Homebrew.
+Currently, there is a problem of using pyenv with MacOS Bir Sur ver11.0.1. This command of "pyenv install 3.x.x" failed. So should not use pyenv.
 
+Install pyenv
 
 ```bash
 # install pyenv using homebrew
@@ -161,31 +187,49 @@ source ~/.zshrc
 brew install pyenv-virtualenv
 echo 'if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi' >> ~/.zshrc
 source ~/.zshrc
+```
 
+Create virtual env
+
+```bash
 # using pyenv with virtualenv
 pyenv install 3.x.x
-pyenv virtualenv 3.x.x my-env
-pyenv shell my-env
+pyenv shell 3.x.x  # to make it main python of system
+pyenv virtualenv 3.x.x my-env # to create virtual env
 cd ~/to_project_folder
 # to start my-env automaticaly when cd into project folder
-pyenv local my-env
+pyenv local my-env # to become env of project
 pyenv shell --unset
 pyenv uninstall my-env
 pyenv uninstall 3.x.x
+```
 
+or with miniconda/anaconda
+
+```bash
 # pyenv and miniconda
 pyenv install miniconda3.x.x
 pyenv shell miniconda3.x.x
 conda create -n my-env python==3.x.x
 conda activate my-env
 conda deactivate
-pyenv shell —-unset miniconda3.x.x
+pyenv shell —-unset
 pyenv uninstall my-env
 pyenv uninstall miniconda3.x.x
 
+# or
+pyenv shell miniconda3.x.x/envs/my-env
+cd /to/project/folder
+pyenv local miniconda3.x.x/envs/my-env
+```
+
+other pyenv commands
+
+```bash
 # other pyenv commands
 pyenv install --list
 pyenv versions
+pyenv virtualenvs
 ```
 
 ## 5. Setting MySQL Server Docker Container
@@ -237,8 +281,8 @@ docker exec -it your-app-name bash
 
 ```
 
-
 ## 7. Creating environment package list
+
 ```bash
 # create packgage list files
 pip list --format=freeze > pip_pkgs.txt
@@ -378,7 +422,7 @@ pip install toree
 jupyter toree install --spark_home=~/Downloads/spark-3.0.1-bin-hadoop2.7.tgz
 
 # Bash kernel
-pip install ipykernel
+# pip install ipykernel
 pip install bash_kernel
 python3 -m bash_kernel.install
 
@@ -502,72 +546,4 @@ count = False
 ignore = E226,E302,E41,E402,E703
 max-line-length = 160
 statistics = True
-```
-
-
-## 11. Setting Django project
-
-Check if Django had been installed well or not
-```bash
-python3 -m django --version
-```
-
-Create project
-```bash
-django-admin startproject project-name
-```
-
-Move inside project folder and edit settings.py.
-Change "ALLOWED_HOSTS = []" into ALLOWED_HOSTS = ['*'] (do not set this at production stage)
-and set TIME_ZONE to match with local timezone.
-
-Try development server
-```bash
-python3 manage.py runserver 0:8000
-```
-
-Open web browser and go to http://localhost:8000 to test server.
-Create django apps and pull files using git.
-
-```bash
-python3 manage.py startapp numberz
-```
-
-Finally, structure of project folder should be like this.
-
-```bash
-Project_folder/
-    project_name/
-        app_name/
-            __init__.py
-            static/
-            templates/
-            admin.py
-            apps.py
-            models.py
-            views.py
-        project_name/
-            __init__.py
-            settings.py
-            urls.py
-            wsgi.py
-        static/
-        templates/
-        .gitignore
-        db.sqlite3
-        Dockerfile
-        manage.py
-        README.md
-        requirements.txt
-```
-
-List of Django manage.py commands
-
-```bash
-python3 manage.py runserver
-python3 manage.py makemigrations
-python3 manage.py migrate
-python3 manage.py diffsettings
-python3 manage.py check
-python3 manage.py createsuperuser
 ```

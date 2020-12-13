@@ -1,0 +1,27 @@
+numpy
+pandas
+matplotlib
+japanize-matplotlib
+seaborn
+jupyterlab
+nodeenv
+scikit-learn
+# sktime
+# sktime-dl
+# pmdarima
+# jupyter-dash
+# ipympl
+ipywidgets
+# itkwidgets
+# jupytext
+jupyter-lsp
+python-language-server
+# jupyterlab_latex
+autopep8
+pylint
+jupyterlab_code_formatter
+# xeus-python
+# toree
+# bash_kernel
+pillow
+tensorflow
