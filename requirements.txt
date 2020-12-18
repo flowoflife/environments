@@ -6,22 +6,23 @@ seaborn
 jupyterlab
 nodeenv
 scikit-learn
-# sktime
-# sktime-dl
-# pmdarima
-# jupyter-dash
-# ipympl
+sktime
+sktime-dl
+pmdarima
+jupyter-dash
+ipympl
 ipywidgets
-# itkwidgets
-# jupytext
+itkwidgets
+jupytext
 jupyter-lsp
 python-language-server
-# jupyterlab_latex
+jupyterlab_latex
 autopep8
 pylint
+pytest
 jupyterlab_code_formatter
-# xeus-python
-# toree
-# bash_kernel
+xeus-python
+toree
+bash_kernel
 pillow
 tensorflow

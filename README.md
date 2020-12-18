@@ -17,10 +17,14 @@ brew install --cask iterm2
 # install git
 brew install git
 chsh -s $(which git)
-# setting GSH keys and git
+# setting SSH keys and git
 git config --global user.name "Your Name Here"
 git config --global user.email "your_email@youremail.com"
+touch ~/.gitignore
 git config --global core.excludesfile ~/.gitignore
+git config --global core.editor
+# check git setting
+git config --list
 
 # install zsh
 brew install zsh
@@ -46,7 +50,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/z
 git clone git@github.com:zsh-users/zsh-completions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-completions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
-# install jdk:
+# install jdk
 brew install --cask oracle-jdk
 sudo ln -sfn /usr/local/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
 # check jdk
@@ -56,152 +60,44 @@ which java
 brew install --cask visual-studio-code
 
 # install PyCharm CE
-brew install --cask pycharm-ce
-
-# install Open Office if neccessary
-brew install --cask openoffice
+brew install --cask pycharm-cepyenv
 ```
 
-## 2. Creating python environment using venv
-
-Creating environment using Homebrew is the best way for MacOS. If you need specific version of python which is not provided by Homebrew, then you can choose to download python version you need from www.python.org, then install it.
-
-Homebrew will put python3 into usr/local/opt folder, so it will not replace original python2 and python3 of MacOS. If you choose to install by yourself, your python3 will be installed into usr/local/bin folder, while python2 is still in usr/bin folder. So your python3.x may replace other python3.x version in usr/local/bin folder. I prefer to use Homebrew to install python.
-
-Creating virtual env using Homebrew and anaconda is always my first choice. This part is about how to create env using venv, not anaconda. The venv env will work well in PyCharm because PyCharm has a step to setting virtual env. You just need to go to Python Interpreter and set virtual env by pointing to your env folder. VSCode cannot detect this venv virtual env automatically.
-
-Next part will show how to create env using Homebrew and anaconda. Creating virtual env using anaconda is good for VSCode and JupyterLab. VSCode can detect this conda virtual env automatically.
-
-
-```bash
-# python 3.8.6, current python version of Homebrew
-brew install python@3.8
-
-# echo into .zshrc
-# see .zshrcorig
-echo 'export PATH="/usr/local/opt/python@3.8/bin:$PATH"' >> ~/.zshrc
-echo 'export LDFLAGS="-L/usr/local/opt/python@3.8/lib"' >> ~/.zshrc
-echo 'export PKG_CONFIG_PATH="/usr/local/opt/python@3.8/lib/pkgconfig"' >> ~/.zshrc
-
-# you may not need these
-echo 'export PATH="/usr/local/opt/sqlite/bin:$PATH"' >> ~/.zshrc
-echo 'export LDFLAGS="-L/usr/local/opt/sqlite/lib"' >> ~/.zshrc
-echo 'export CPPFLAGS="-I/usr/local/opt/sqlite/include"' >> ~/.zshrc
-echo 'export PKG_CONFIG_PATH="/usr/local/opt/sqlite/lib/pkgconfig"' >> ~/.zshrc
-
-# check OpenSSL
-python3 -c "import ssl; print(ssl.OPENSSL_VERSION)"
-# return OpenSSL 1.1.1i
-
-# create virtual env
-python3 -m venv ~/path/to/envs/my-env
-
-# activate my-env
-source ~/path/to/envs/my-env/bin/activate
-
-# upgrade dependencies
-python3 -m pip install -U pip setuptools wheel
-
-# install tensorflow and other packages
-pip install -r requirements.txt
-
-# just in case you have Jupyter Notebook
-# and you want to have nodejs for Notebook
-# install nodejs
-# pip install nodeenv
-nodeenv -p
-
-# check nodejs
-# npm -v
-nodejs -v
-
-# build jupyter lab
-jupyter lab build
-
-# start jupyter lab
-jupyter lab
-
-# close my-env
-deactivate
-```
-
-## 3. Creating python environment using anaconda
-
-Install anaconda
-
-```bash
-brew install --cask anaconda
-cd /
-usr/local/anaconda3/bin/conda init zsh
-
-# close zsh window, open new window
-# you will see
-(base) ->
-```
-
-Create virtual env
-
-```bash
-# create anaconda virtual env at prefered location
-conda create --prefix /path/to/project/folder/env-name --file conda_pkgs.txt
-# or conda create --prefix /path/to/project/folder/env-name python==3.x.x
-conda activate /path/to/project/folder/env-name
-# you will see
-(/path/to/project/folder/env-name) $
-
-# you may not need this
-python3 -m pip install -U pip setuptools wheel
-
-# install other packages
-pip install -r pip_pkgs.txt
-# or pip install -r requirements.txt
-
-# just in case you have Jupyter Notebook
-# and you want to have nodejs for Notebook
-# install nodejs
-# pip install nodeenv
-nodeenv -p
-
-# to come back with local python env
-(base) -> conda deactivate
-
-# always be sure which python you are working with
-# check python env again
-which python3
-```
-
-## 4. Creating python environment using pyenv
-
-You will not need this if you already install anaconda, and know how to work with anaconda and Homebrew.
-Currently, there is a problem of using pyenv with MacOS Bir Sur ver11.0.1. This command of "pyenv install 3.x.x" failed. So should not use pyenv.
+## 2. Creating python environment using pyenv
 
 Install pyenv
 
 ```bash
 # install pyenv using homebrew
 brew install pyenv
-echo 'if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv init -)"; fi' >> ~/.zshrc
-source ~/.zshrc
+# git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
+# echo 'if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv init -)"; fi' >> ~/.zshrc
+# source ~/.zshrc
 
 # install virtualenv
 brew install pyenv-virtualenv
-echo 'if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi' >> ~/.zshrc
+# git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
+# echo 'if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi' >> ~/.zshrc
+echo 'eval "$(pyenv init -)"' >> ~/.zshrc
+echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.zshrc
 source ~/.zshrc
 ```
-
 Create virtual env
 
 ```bash
 # using pyenv with virtualenv
 pyenv install 3.x.x
-pyenv shell 3.x.x  # to make it main python of system
-pyenv virtualenv 3.x.x my-env # to create virtual env
+# to create virtual env
+# it will use venv if existed
+pyenv virtualenv 3.x.x my-env
+pyenv activate my-env
 cd ~/to_project_folder
 # to start my-env automaticaly when cd into project folder
-pyenv local my-env # to become env of project
-pyenv shell --unset
-pyenv uninstall my-env
-pyenv uninstall 3.x.x
+pyenv local my-env # to become env of project automatically
+pip install -U pip setuptools wheel
+pip install -r requirements.txt
 ```
 
 or with miniconda/anaconda
@@ -210,29 +106,50 @@ or with miniconda/anaconda
 # pyenv and miniconda
 pyenv install miniconda3.x.x
 pyenv shell miniconda3.x.x
-conda create -n my-env python==3.x.x
-conda activate my-env
-conda deactivate
-pyenv shell —-unset
-pyenv uninstall my-env
-pyenv uninstall miniconda3.x.x
-
-# or
-pyenv shell miniconda3.x.x/envs/my-env
-cd /to/project/folder
-pyenv local miniconda3.x.x/envs/my-env
+conda update -n base -c defaults conda -y
+conda create -n my-env python==3.x.x -y
+# or conda create -p /path/to/project/my-env -f requirements.txt -y
+# or pyenv virtualenv miniconda3.x.x my-env
+# it will use conda create
+pyenv shell --unset
+pyenv activate my-env
+cd ~/to_project_folder
+# to start my-env automaticaly when cd into project folder
+pyenv local my-env # to become env of project automatically
+conda install -c conda-forge package-name -y
 ```
 
-other pyenv commands
+or with pipenv
 
 ```bash
-# other pyenv commands
-pyenv install --list
-pyenv versions
-pyenv virtualenvs
+# currently pipenv is very slow
+# not recommend to use
 ```
 
-## 5. Setting MySQL Server Docker Container
+other commands
+
+```bash
+# check available pythons
+pyenv install -l
+# check installed pythons by pyenv
+pyenv versions
+# check created virtual env list
+pyenv virtualenvs
+# to set system python of current shell
+pyenv shell 3.x.x
+pyenv shell --unset
+# set global python to 3.x.x
+pyenv global 3.x.x
+# set global python back to system
+pyenv global system
+# to uninstall
+pyenv uninstall my-env
+pyenv uninstall 3.x.x
+pyenv uninstall miniconda3.x.x
+pyenv virtualenv-delete my-env
+```
+
+## 3. Setting MySQL Server Docker Container
 
 ```bash
 # Pull the latest MySQL docker image (https://store.docker.com/images/mysql)
@@ -256,7 +173,7 @@ docker run --restart always  \
 
 ```
 
-## 6. Building app using Dockerfile
+## 4. Building app using Dockerfile
 
 Put Dockerfile and requirements.txt files below in a working directory.
 
@@ -281,7 +198,7 @@ docker exec -it your-app-name bash
 
 ```
 
-## 7. Creating environment package list
+## 5. Creating environment package list
 
 ```bash
 # create packgage list files
@@ -296,7 +213,7 @@ pip install -r pip_pkgs.txt
 
 ```
 
-## 8. Installation of JupyterLab extensions and setting
+## 6. Installation of JupyterLab extensions and setting
 
 ```bash
 # Manager
@@ -413,7 +330,7 @@ jupyter lab build
 jupyter labextension list
 ```
 
-## 9. Installation of other kernels in JupyterLab
+## 7. Installation of other kernels in JupyterLab
 
 ```bash
 # Install Apache Spark Scala kernel
@@ -442,7 +359,7 @@ jupyter kernelspec list
 jupyter kernelspec remove "kernel-name"
 ```
 
-## 10. Setting JupyterLab
+## 8. Setting JupyterLab
 
 Go to Settings/Advanced Settings Editor:
 
