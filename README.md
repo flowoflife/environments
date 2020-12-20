@@ -60,10 +60,13 @@ which java
 brew install --cask visual-studio-code
 
 # install PyCharm CE
-brew install --cask pycharm-cepyenv
+brew install --cask pycharm-ce
+
+# install Docker CE
+brew install --cask docker
 ```
 
-## 2. Creating python environment using pyenv
+## 2. Creating python environment using pyenv, pipenv, conda
 
 Install pyenv
 
@@ -83,21 +86,29 @@ brew install pyenv-virtualenv
 echo 'eval "$(pyenv init -)"' >> ~/.zshrc
 echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.zshrc
 source ~/.zshrc
+
+# install pipenv
+brew install pipenv
 ```
-Create virtual env
+
+to create virtual env using pyenv-virtualenv
 
 ```bash
-# using pyenv with virtualenv
-pyenv install 3.x.x
+# using python 3.8.0
+pyenv install 3.8.0
 # to create virtual env
 # it will use venv if existed
-pyenv virtualenv 3.x.x my-env
-pyenv activate my-env
+pyenv virtualenv 3.8.0 my-env
+# a virtual env will be saved at ~/.pyenv/versions/3.8.0/envs/my-env
+pyenv activate 3.8.0/envs/my-env
 cd ~/to_project_folder
 # to start my-env automaticaly when cd into project folder
-pyenv local my-env # to become env of project automatically
+pyenv local 3.8.0/envs/my-env # to become env of project automatically
 pip install -U pip setuptools wheel
 pip install -r requirements.txt
+# to install nodejs for jupyter notebook
+# pip install nodeenv
+nodeenv -p
 ```
 
 or with miniconda/anaconda
@@ -105,25 +116,57 @@ or with miniconda/anaconda
 ```bash
 # pyenv and miniconda
 pyenv install miniconda3.x.x
-pyenv shell miniconda3.x.x
+pyenv activate miniconda3.x.x
 conda update -n base -c defaults conda -y
-conda create -n my-env python==3.x.x -y
+conda update --all -y
+conda create -n my-env python==3.8.0 -y
+# a virtual env will be saved at ~/.pyenv/versions/miniconda3.x.x/envs/my-env
 # or conda create -p /path/to/project/my-env -f requirements.txt -y
 # or pyenv virtualenv miniconda3.x.x my-env
 # it will use conda create
-pyenv shell --unset
-pyenv activate my-env
+pyenv deactivate
+pyenv activate miniconda3.x.x/envs/my-env
 cd ~/to_project_folder
 # to start my-env automaticaly when cd into project folder
-pyenv local my-env # to become env of project automatically
-conda install -c conda-forge package-name -y
+pyenv local miniconda3.x.x/envs/my-env # to become env of project automatically
+# conda install -c conda-forge package-name -y
+pip install -U pip setuptools wheel
+pip install -r requirements.txts
 ```
 
-or with pipenv
+or with pipenv (Note: VSCode cannot use this virtual env)
 
 ```bash
-# currently pipenv is very slow
-# not recommend to use
+pyenv install 3.8.0 # or pipenv --python 3.8.0
+cd ~/project/folder
+# to point to python interpreter
+pipenv --python ~/.pyenv/versions/3.8.0/bin/python3.8
+# a virtual env will be saved at ~/.local/share/virtualenvs/
+pipenv install # if Pipfile existed, or Pipfile will be updated
+# or
+pipenv install -r requirements.txt # Pipfile will be created
+# to check security
+pipenv check
+# to activate virtual env
+pipenv shell
+# to deactivate
+exit
+# to check path of virtual env
+pipenv --venv
+# to remove
+pipenv --rm
+# to update
+pipenv update
+pipenv sync  # to sync environments
+# to see all dependencies and subdependencies
+pipenv graph
+# command can be registed as script in Pipfile
+[scripts]
+test = "python -m unittest discover -v"
+# and run
+pipenv run test
+# to lock package dependencies
+pipenv lock  # Pipfile.lock will be created
 ```
 
 other commands
@@ -142,6 +185,9 @@ pyenv shell --unset
 pyenv global 3.x.x
 # set global python back to system
 pyenv global system
+# to set python for current local folder
+pyenv local my-env
+pyenv local --unset
 # to uninstall
 pyenv uninstall my-env
 pyenv uninstall 3.x.x

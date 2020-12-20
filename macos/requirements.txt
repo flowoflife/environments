@@ -4,7 +4,6 @@ matplotlib
 japanize-matplotlib
 seaborn
 jupyterlab
-nodeenv
 scikit-learn
 sktime
 sktime-dl
@@ -24,5 +23,9 @@ jupyterlab_code_formatter
 xeus-python
 toree
 bash_kernel
-pillow
+jupyter-c-kernel
+sphinx
+Pillow
 tensorflow
+tensorflow-datasets
+

@@ -1,0 +1,8 @@
+.DS_Store
+.idea
+.ipynb_checkpoints
+workspace*
+venv
+.python-version
+.vscode
+.virtual_documents
