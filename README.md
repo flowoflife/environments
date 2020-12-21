@@ -296,9 +296,9 @@ jupyter labextension install jupyter-matplotlib jupyterlab-datawidgets itkwidget
 # view(image)
 
 # SOS
-conda install jupyterlab-sos -c conda-forge
-jupyter labextension install transient-display-data
-jupyter labextension install jupyterlab-sos
+# conda install jupyterlab-sos -c conda-forge
+# jupyter labextension install transient-display-data
+# jupyter labextension install jupyterlab-sos
 
 # Jupyter commands, no need
 # pip install jupyterlab_commands
