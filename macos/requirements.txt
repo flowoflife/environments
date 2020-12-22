@@ -17,6 +17,7 @@ jupyter-lsp
 python-language-server
 jupyterlab_latex
 autopep8
+flake8
 pylint
 pytest
 jupyterlab_code_formatter

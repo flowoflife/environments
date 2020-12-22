@@ -64,6 +64,24 @@ brew install --cask pycharm-ce
 
 # install Docker CE
 brew install --cask docker
+
+# install miniconda
+brew install --cask miniconda
+conda init "$(basename "${SHELL}")"
+conda config --set auto_activate_base False
+conda update -n base -c defaults conda -y
+conda update --all -y
+
+# to enable OpenMP support on the default Apple-clang
+brew install libomp
+# put these to .zshrc
+# export CC=/usr/bin/clang
+# export CXX=/usr/bin/clang++
+# export CPPFLAGS="$CPPFLAGS -Xpreprocessor -fopenmp"
+# export CFLAGS="$CFLAGS -I/usr/local/opt/libomp/include"
+# export CXXFLAGS="$CXXFLAGS -I/usr/local/opt/libomp/include"
+# export LDFLAGS="$LDFLAGS -L/usr/local/opt/libomp/lib -lomp"
+# export DYLD_LIBRARY_PATH=/usr/local/opt/libomp/lib
 ```
 
 ## 2. Creating python environment using pyenv, pipenv, conda
@@ -109,29 +127,6 @@ pip install -r requirements.txt
 # to install nodejs for jupyter notebook
 # pip install nodeenv
 nodeenv -p
-```
-
-or with miniconda/anaconda
-
-```bash
-# pyenv and miniconda
-pyenv install miniconda3.x.x
-pyenv activate miniconda3.x.x
-conda update -n base -c defaults conda -y
-conda update --all -y
-conda create -n my-env python==3.8.0 -y
-# a virtual env will be saved at ~/.pyenv/versions/miniconda3.x.x/envs/my-env
-# or conda create -p /path/to/project/my-env -f requirements.txt -y
-# or pyenv virtualenv miniconda3.x.x my-env
-# it will use conda create
-pyenv deactivate
-pyenv activate miniconda3.x.x/envs/my-env
-cd ~/to_project_folder
-# to start my-env automaticaly when cd into project folder
-pyenv local miniconda3.x.x/envs/my-env # to become env of project automatically
-# conda install -c conda-forge package-name -y
-pip install -U pip setuptools wheel
-pip install -r requirements.txts
 ```
 
 or with pipenv (Note: VSCode cannot use this virtual env)
@@ -193,6 +188,18 @@ pyenv uninstall my-env
 pyenv uninstall 3.x.x
 pyenv uninstall miniconda3.x.x
 pyenv virtualenv-delete my-env
+```
+
+or with miniconda/anaconda
+
+```bash
+conda create -n my-env python==3.8.0 -y
+# or conda create -p /path/to/project/my-env -f requirements.txt -y
+conda activate my-env
+cd ~/to_project_folder
+# conda install -c conda-forge package-name -y
+pip install -U pip setuptools wheel
+pip install -r requirements.txt
 ```
 
 ## 3. Setting MySQL Server Docker Container
@@ -284,7 +291,7 @@ pip install ipympl
 pip install ipywidgets
 jupyter nbextension enable --py --user widgetsnbextension
 
-# knowledgelab is outdated, should not install
+# knowledgelab is outdated
 # pip install knowledgelab
 # jupyter labextension install knowledgelab
 
@@ -300,7 +307,7 @@ jupyter labextension install jupyter-matplotlib jupyterlab-datawidgets itkwidget
 # jupyter labextension install transient-display-data
 # jupyter labextension install jupyterlab-sos
 
-# Jupyter commands, no need
+# Jupyter commands
 # pip install jupyterlab_commands
 # jupyter labextension install jupyterlab_commands
 # jupyter serverextension enable --py --user jupyterlab_commands
@@ -308,7 +315,7 @@ jupyter labextension install jupyter-matplotlib jupyterlab-datawidgets itkwidget
 # jupytext
 pip install jupytext
 
-# Jupiter lab sql is outdated, should not install
+# Jupiter lab sql is outdated
 # pip install jupyterlab_sql
 # jupyter serverextension enable jupyterlab_sql --py --user
 
@@ -321,7 +328,6 @@ jupyter labextension install @krassowski/jupyterlab-lsp
 pip install python-language-server
 # R -e 'install.packages("languageserver")'
 
-# Error, should not install
 # jupyter labextension install jupyterlab-drawio
 
 # Latex
@@ -330,7 +336,7 @@ jupyter labextension install @jupyterlab/latex
 jupyter serverextension enable --py --user jupyterlab_latex
 
 # Jupyter Lab Code Formatter
-pip install autopep8 pylint
+pip install autopep8 flak8 pylint
 # pip install rpy2
 # R -e 'install.packages("formatR", repos = "http://cran.rstudio.com")'
 # R -e 'install.packages("styler")'
