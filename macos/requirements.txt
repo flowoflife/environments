@@ -5,9 +5,9 @@ japanize-matplotlib
 seaborn
 jupyterlab
 scikit-learn
-# sktime
-# sktime-dl
-# pmdarima
+sktime
+sktime-dl
+pmdarima
 jupyter-dash
 ipympl
 ipywidgets
@@ -21,10 +21,10 @@ flake8
 pylint
 pytest
 jupyterlab_code_formatter
-# xeus-python
-# toree
-# bash_kernel
-# jupyter-c-kernel
+xeus-python
+toree
+bash_kernel
+jupyter-c-kernel
 sphinx
 Pillow
 tensorflow

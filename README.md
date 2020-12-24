@@ -67,6 +67,8 @@ brew install --cask docker
 
 # install miniconda
 brew install --cask miniconda
+# or pyenv install miniconda3.x.x
+# pyenv activate miniconda3.x.x
 conda init "$(basename "${SHELL}")"
 conda config --set auto_activate_base False
 conda update -n base -c defaults conda -y
@@ -82,6 +84,12 @@ brew install libomp
 # export CXXFLAGS="$CXXFLAGS -I/usr/local/opt/libomp/include"
 # export LDFLAGS="$LDFLAGS -L/usr/local/opt/libomp/lib -lomp"
 # export DYLD_LIBRARY_PATH=/usr/local/opt/libomp/lib
+
+# install R
+# using conda for specific version of R
+brew install --cask xquartz
+brew install r
+brew install --cask rstudio
 ```
 
 ## 2. Creating python environment using pyenv, pipenv, conda
@@ -193,6 +201,11 @@ pyenv virtualenv-delete my-env
 or with miniconda/anaconda
 
 ```bash
+# if using pyenv
+# pyenv virtualenv miniconda3.x.x my-env
+# pyenv activate miniconda3.x.x/envs/my-env
+# or using pipenv
+# pipenv --python /path/to/python_interpreter
 conda create -n my-env python==3.8.0 -y
 # or conda create -p /path/to/project/my-env -f requirements.txt -y
 conda activate my-env
