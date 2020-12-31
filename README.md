@@ -75,18 +75,16 @@ brew install --cask docker
 # conda update --all -y
 
 # to enable OpenMP support on the default Apple-clang
-# brew install libomp
-# put these to .zshrc
-# export CC=/usr/bin/clang
-# export CXX=/usr/bin/clang++
-# export CPPFLAGS="$CPPFLAGS -Xpreprocessor -fopenmp"
-# export CFLAGS="$CFLAGS -I/usr/local/opt/libomp/include"
-# export CXXFLAGS="$CXXFLAGS -I/usr/local/opt/libomp/include"
-# export LDFLAGS="$LDFLAGS -L/usr/local/opt/libomp/lib -lomp"
-# export DYLD_LIBRARY_PATH=/usr/local/opt/libomp/lib
+brew install libomp
+echo 'export CC=/usr/bin/clang' >> ~/.zshrc
+echo 'export CXX=/usr/bin/clang++' >> ~/.zshrc
+echo 'export CPPFLAGS="$CPPFLAGS -Xpreprocessor -fopenmp"' >> ~/.zshrc
+echo 'export CFLAGS="$CFLAGS -I/usr/local/opt/libomp/include"' >> ~/.zshrc
+echo 'export CXXFLAGS="$CXXFLAGS -I/usr/local/opt/libomp/include"' >> ~/.zshrc
+echo 'export LDFLAGS="$LDFLAGS -L/usr/local/opt/libomp/lib -lomp"' >> ~/.zshrc
+echo 'export DYLD_LIBRARY_PATH=/usr/local/opt/libomp/lib' >> ~/.zshrc
 
 # install R
-# using conda for specific version of R
 brew install --cask xquartz
 brew install r
 brew install --cask rstudio
@@ -406,16 +404,12 @@ jupyter toree install --spark_home=~/Downloads/spark-3.0.1-bin-hadoop2.7.tgz
 # python3 -m bash_kernel.install
 
 # R kernel
-# conda create -n my-env python==3.x.x -y
-# conda activate my-env
-# conda install r-base r-essentials
-# conda update -c rdonnellyr -c main --all
-# R
-# install.packages('IRkernel')
-# IRkernel::installspec()
-# q('no')
-# pip install ipykernel
-# python -m ipykernel install --user --name=my-env
+# pyenv activate miniconda3.x.x
+# conda create -n R361 python==3.7.9 -y
+# conda activate R361
+# conda install -c r r-essentials
+# conda install jupyter
+# ipython kernel install --name your-env-name --user
 
 # C kernel
 # pip install jupyter-c-kernel
