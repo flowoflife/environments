@@ -1,16 +1,5 @@
 pip install -U pip setuptools wheel
-conda install -c conda-forge pandas -y
-conda install -c conda-forge matplotlib -y
-conda install -c conda-forge seaborn -y
-conda install -c conda-forge jupyterlab==2.2.2 -y
-conda install -c conda-forge scikit-learn -y
-conda install -c conda-forge autopep8 -y
-conda install -c conda-forge pylint -y
-conda install -c conda-forge pytest -y
-conda install -c conda-forge sphinx -y
-conda install -c conda-forge tensorflow-datasets -y
-conda install -c conda-forge tensorflow -y
-pip install -r ~/projects/environments/macos/pip_requirements.txt
+pip install -r ~/projects/environments/macos/requirements.txt
 pip install nodeenv
 nodeenv -p
 jupyter labextension install @jupyter-widgets/jupyterlab-manager
@@ -30,3 +19,6 @@ jupyter serverextension enable --py --user jupyterlab_code_formatter
 # install_c_kernel --user
 jupyter lab clean
 jupyter lab build
+jupyter labextension list
+jupyter serverextension list
+jupyter kernelspec list

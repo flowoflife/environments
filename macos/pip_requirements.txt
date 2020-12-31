@@ -1,11 +1,11 @@
 japanize-matplotlib
 # jupyter-dash
 # ipympl
-ipywidgets
-itkwidgets
+# ipywidgets
+# itkwidgets
 # jupytext
-jupyter-lsp
-python-language-server
+# jupyter-lsp
+# python-language-server[all]
 # jupyterlab_latex
-jupyterlab_code_formatter
+# jupyterlab_code_formatter
 

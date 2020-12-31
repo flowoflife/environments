@@ -54,9 +54,6 @@ brew install pyenv
 # install virtualenv
 brew install pyenv-virtualenv
 
-# install pipenv
-brew install pipenv
-
 # install R
 brew install --cask xquartz
 brew install r

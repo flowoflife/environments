@@ -66,16 +66,16 @@ brew install --cask pycharm-ce
 brew install --cask docker
 
 # install miniconda
-brew install --cask miniconda
+# brew install --cask miniconda
 # or pyenv install miniconda3.x.x
 # pyenv activate miniconda3.x.x
-conda init "$(basename "${SHELL}")"
-conda config --set auto_activate_base False
-conda update -n base -c defaults conda -y
-conda update --all -y
+# conda init "$(basename "${SHELL}")"
+# conda config --set auto_activate_base False
+# conda update -n base -c defaults conda -y
+# conda update --all -y
 
 # to enable OpenMP support on the default Apple-clang
-brew install libomp
+# brew install libomp
 # put these to .zshrc
 # export CC=/usr/bin/clang
 # export CXX=/usr/bin/clang++
@@ -116,9 +116,6 @@ brew install pyenv-virtualenv
 echo 'eval "$(pyenv init -)"' >> ~/.zshrc
 echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.zshrc
 source ~/.zshrc
-
-# install pipenv
-brew install pipenv
 ```
 
 to create virtual env using pyenv-virtualenv
@@ -130,26 +127,27 @@ pyenv install 3.8.0
 # it will use venv if existed
 pyenv virtualenv 3.8.0 my-env
 # a virtual env will be saved at ~/.pyenv/versions/3.8.0/envs/my-env
-pyenv activate 3.8.0/envs/my-env
 cd ~/to_project_folder
 # to start my-env automaticaly when cd into project folder
-pyenv local 3.8.0/envs/my-env # to become env of project automatically
+pyenv local my-env # to become env of project automatically
 pip install -U pip setuptools wheel
 pip install -r requirements.txt
 # to install nodejs for jupyter notebook
-# pip install nodeenv
+pip install nodeenv
 nodeenv -p
 ```
 
-or with pipenv (Note: VSCode cannot use this virtual env)
+or with pipenv (VSCode cannot use this virtual env)
 
 ```bash
 pyenv install 3.8.0 # or pipenv --python 3.8.0
 cd ~/project/folder
-# to point to python interpreter
+pyenv local 3.8.0
+pip install -U pip setuptools wheel
+pip install pipenv
 pipenv --python ~/.pyenv/versions/3.8.0/bin/python3.8
 # a virtual env will be saved at ~/.local/share/virtualenvs/
-pipenv install # if Pipfile existed, or Pipfile will be updated
+# pipenv install # if Pipfile existed, or Pipfile will be updated
 # or
 pipenv install -r requirements.txt # Pipfile will be created
 # to check security
@@ -205,18 +203,13 @@ pyenv virtualenv-delete my-env
 or with miniconda/anaconda
 
 ```bash
-# if using pyenv
-# pyenv virtualenv miniconda3.x.x my-env
-# pyenv activate miniconda3.x.x/envs/my-env
-# or using pipenv
-# pipenv --python /path/to/python_interpreter
+pyenv install miniconda3.x.x
+pyenv activate miniconda3.x.x
+conda update --all -y
 conda create -n my-env python==3.8.0 -y
-# or conda create -p /path/to/project/my-env -f requirements.txt -y
+# conda create -p /path/to/project/my-env -f requirements.txt -y
 conda activate my-env
-cd ~/to_project_folder
-# conda install -c conda-forge package-name -y
-pip install -U pip setuptools wheel
-pip install -r requirements.txt
+conda install -c conda-forge package-name -y
 ```
 
 ## 3. Setting MySQL Server Docker Container
@@ -409,15 +402,20 @@ jupyter toree install --spark_home=~/Downloads/spark-3.0.1-bin-hadoop2.7.tgz
 
 # Bash kernel
 # pip install ipykernel
-pip install bash_kernel
-python3 -m bash_kernel.install
+# pip install bash_kernel
+# python3 -m bash_kernel.install
 
 # R kernel
+# conda create -n my-env python==3.x.x -y
+# conda activate my-env
 # conda install r-base r-essentials
-# conda install -c r r-irkernel
+# conda update -c rdonnellyr -c main --all
 # R
 # install.packages('IRkernel')
 # IRkernel::installspec()
+# q('no')
+# pip install ipykernel
+# python -m ipykernel install --user --name=my-env
 
 # C kernel
 # pip install jupyter-c-kernel
@@ -473,13 +471,7 @@ Language Server:
       "serverSettings": {
         "pyls.plugins.pydocstyle.enabled": true,
         "pyls.plugins.pyflakes.enabled": false,
-        "pyls.plugins.flake8.enabled": true
-      }
-    },
-    "r-languageserver": {
-      "serverSettings": {
-        "r.lsp.debug": false,
-        "r.lsp.diagnostics": false
+        "pyls.plugins.flake8.enabled": false
       }
     }
   }
@@ -499,26 +491,9 @@ JupyterLab Code Formatter:
             "E703"
         ]
     },
-    "styler": {
-        "math_token_spacing": {
-            "zero":["'^'"],
-            "one":["'+'", "'-'", "'*'","'/'"]
-        },
-        "reindention": {
-            "regex_pattern" : "^###",
-            "indention" : 0,
-            "comments_only" : true}
-    },
-    "formatR": {
-        "indent": 4,
-        "arrow": true,
-        "wrap": true,
-        "width_cutoff": 150
-    },
     "preferences": {
         "default_formatter": {
-            "python": "autopep8",
-            "r": "styler"
+            "python": "autopep8"
         }
     }
 }
@@ -529,7 +504,7 @@ Go to /Users/you/.config, create pycodestyle file, insert content below
 ```bash
 [pycodestyle]
 count = False
-ignore = E226,E302,E41,E402,E703
-max-line-length = 160
-statistics = True
+ignore = E226,E302,E41,E402,E501,W605,E703,E741
+max-line-length = 80
+statistics = False
 ```
