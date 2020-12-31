@@ -290,16 +290,16 @@ pip install -r pip_pkgs.txt
 jupyter labextension install @jupyter-widgets/jupyterlab-manager
 
 # Spark
-jupyter labextension install jupyterlab_spark
+# jupyter labextension install jupyterlab_spark
 
 # Table of content
 jupyter labextension install @jupyterlab/toc
 
-# Ploty Jupyter Dash
-pip install jupyter-dash
+# Ploty Jupyter Dash, outdated
+# pip install jupyter-dash
 
 # ipympl %matplotlib widget
-pip install ipympl
+# pip install ipympl
 
 # Tensorboard, should not use
 # jupyter labextension install jupyterlab_tensorboard
@@ -329,8 +329,8 @@ jupyter labextension install jupyter-matplotlib jupyterlab-datawidgets itkwidget
 # jupyter labextension install jupyterlab_commands
 # jupyter serverextension enable --py --user jupyterlab_commands
 
-# jupytext
-pip install jupytext
+# jupytext, outdated
+# pip install jupytext
 
 # Jupiter lab sql is outdated
 # pip install jupyterlab_sql
@@ -348,17 +348,17 @@ pip install python-language-server
 # jupyter labextension install jupyterlab-drawio
 
 # Latex
-pip install jupyterlab_latex
-jupyter labextension install @jupyterlab/latex
-jupyter serverextension enable --py --user jupyterlab_latex
+# pip install jupyterlab_latex
+# jupyter labextension install @jupyterlab/latex
+# jupyter serverextension enable --py --user jupyterlab_latex
 
 # Jupyter Lab Code Formatter
-pip install autopep8 flak8 pylint
+pip install autopep8 pylint
 # pip install rpy2
 # R -e 'install.packages("formatR", repos = "http://cran.rstudio.com")'
 # R -e 'install.packages("styler")'
-jupyter labextension install @ryantam626/jupyterlab_code_formatter
 pip install jupyterlab_code_formatter
+jupyter labextension install @ryantam626/jupyterlab_code_formatter
 jupyter serverextension enable --py --user jupyterlab_code_formatter
 # using
 # %load_ext rpy2.ipython

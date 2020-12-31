@@ -28,6 +28,3 @@ sphinx
 Pillow
 tensorflow
 tensorflow-datasets
-django
-flask
-
