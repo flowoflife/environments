@@ -90,6 +90,10 @@ brew install libomp
 brew install --cask xquartz
 brew install r
 brew install --cask rstudio
+
+# install others if necessary
+brew install --cask slack
+brew install --cask zoom
 ```
 
 ## 2. Creating python environment using pyenv, pipenv, conda

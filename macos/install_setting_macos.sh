@@ -62,6 +62,10 @@ brew install --cask xquartz
 brew install r
 brew install --cask rstudio
 
+# install others
+brew install --cask slack
+brew install --cask zoom
+
 brew upgrade
 brew update
 brew cleanup
