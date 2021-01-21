@@ -1,6 +1,10 @@
 ## How to use Git
 
-## 1. Git setting
+Noted by Phan Hoang Phuong
+
+2021 Jan 22
+
+### 1. Git setting
 
 ```bash
 # check git version
@@ -16,6 +20,28 @@ git config --global core.excludesfile ~/.gitignore
 # set git editor
 git config --global core.editor vim
 git config --list
+```
+
+some common commands
+
+```bash
+git reset   # remove files from staging area
+
+git add -A /path/to/folder
+# add all changed files in folder to staging area
+# even in upper folders if they are all tracked by git
+
+# or
+git add ~/folder/  # -A is default
+
+# or
+git add -u   # add all but not untracked files
+
+# or only at current directory
+git add .
+
+# not recommend to use
+git add *
 ```
 
 ### 2. Setting Git for local project
@@ -184,13 +210,15 @@ git commit -m "commit message"
 git checkout <previous-branch-name>
 ```
 
-### 7. Setting DiffMerge
+### 7. Setting DiffTool and DiffMerge
 
 ref: https://medium.com/@vitorhsb/how-to-set-diffmerge-as-git-merge-and-diff-tool-unix-40df346c11c4
 
 ```bash
+# install diffmerge
 brew install --cask diffmerge
 
+# setting git config
 git config --global merge.tool diffmerge
 git config --global mergetool.diffmerge.cmd "/usr/local/bin/diffmerge --merge --result=\"\$MERGED\" \"\$LOCAL\" \"\$BASE\" \"\$REMOTE\""
 git config --global mergetool.diffmerge.trustExitCode true
@@ -198,5 +226,12 @@ git config --global mergetool.keepBackup false
 git config --global diff.tool diffmerge
 git config --global difftool.diffmerge.cmd "/usr/local/bin/diffmerge --nosplash \"\$LOCAL\" \"\$REMOTE\""
 
-git config --global --e
+# check config
+git config --global --list
+
+# use difftool to fix confict between files
+git difftool
+
+# use diffmerge to fix conflict between branches
+git diffmerge
 ```
