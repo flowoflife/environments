@@ -22,7 +22,7 @@ git config --global user.name "Your Name Here"
 git config --global user.email "your_email@youremail.com"
 touch ~/.gitignore
 git config --global core.excludesfile ~/.gitignore
-git config --global core.editor
+git config --global core.editor vim
 # check git setting
 git config --list
 
