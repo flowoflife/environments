@@ -92,6 +92,17 @@ brew install --cask rstudio
 # install others if necessary
 brew install --cask slack
 brew install --cask zoomgit
+
+# install Apache Spark
+brew install apache-spark
+# change x.x.x to the version of Apache Spark
+echo 'export SPARK_HOME=/usr/local/Cellar/apache-spark/x.x.x/libexec' >> ~/.zshrc
+echo 'export PYTHONPATH=/usr/local/Cellar/apache-spark/x.x.x/libexec/python/:$PYTHONP$' >> ~/.zshrc
+# to start Apache Spark shell
+pyspark   # control D to exit
+# Spark context Web UI available at http://192.168.11.2:4040
+# or
+Spark-shell  # to use Scala
 ```
 
 ## 2. Creating python environment using pyenv, pipenv, conda
