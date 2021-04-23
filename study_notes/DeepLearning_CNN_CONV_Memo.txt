@@ -1,0 +1,330 @@
+Deep Learning Course (Coursera) by Andrew Ng and Laurence Moroney
+(Deeplearning.ai course)
+
+Noted by: Phan Hoang Phuong
+2021 Jan 01
+
+The ultimate concept is that they narrow down the content of the image to focus on specific, distinct, details.
+
+I. Convolution Network:
+
+Filter is a vertical edge detector.
+1  0  -1
+1  0  -1
+1  0  -1
+
+or a horizontal edge detector:
+ 1  1  1
+ 0  0  0
+-1 -1 -1
+
+1 will create white, 0 will create gray, -1 will create black in image.
+there are some other types of edge detector.
+edge detector will converse original image into new one with different patterns
+of color.
+* is convolution operator.
+More about filter: https://lodev.org/cgtutor/filtering.html
+
+1. Convolution 2d, 1 layer:
+n x n image size, f x f filter size (vertical or horizon edge detection),
+ padding p, stride s, the result image after convolution
+ will have size of ((n + 2p - f)/s + 1) x ((n + 2p - f)/s + 1).
+
+2. Because there is a flipping step of filter during convolution
+process, math textbook may call convolution as cross correlation
+process (technical term issue).
+
+3. Convolution 3d (RGB image), 1 layer:
+nh: height of image
+nw: width of image
+nc: channel of image
+nh x nw x nc image size, f x f x nc filter size, c number of filter,
+size and number of result image after convolution will be
+(n - f + 1) x (n - f + 1) x c.
+
+4. Convolution 3d, l layers:
+f[l]: filter size at layer l
+p[l]: padding at layer l
+s[l]: stride at layer l
+nc[l]: number of filter at layer l
+input: nh[l-1] x nw[l-1] x nc[l-1]
+output: nh[l] x nw[l] x nc[l]
+size of filter is: f[l] x f[l] x nc[l-1]
+a[l]: activation size at layer l or output
+a[l] = nh[l] x nw[l] x nc[l]
+A[l] = m x nh[l] x nw[l] x nc[l] with m examples
+weights W[l]: f[l] x f[l] x nc[l-1] x nc[l]
+bias b[l]: nc[l] or (1, 1, 1, nc[l]) as a tensor
+sum of parameters of CONV = w + b
+sum of parameters of DENSE = nc[l-1] x nc[l] + b[l]
+nh[l] = (nh[l-1] + 2p[l] - f[l])/s[l] + 1
+nw[l] = (nw[l-1] + 2p[l] - f[l])/s[l] + 1
+product after applying filter is z[l] = W[l].a[l-1] + b[l]
+then applying with, eg. RELU activation in g()
+a[l] = g(z[l])
+
+5. Pooling layer:
+hyper-parameters: f filter size, s stride size
+2x2 same means f=2, s=2, and add padding to get same size after pooling
+output: ((n[l-1] + 2p[l] - f[l])/s[l] + 1) x ((n[l-1] + 2p[l] - f[l])/s[l] + 1) x nc[l]
+it reduces size of nh and nw.
+two types: max pooling, average pooling
+there is nothing to learn in pooling layers.
+
+6. Convolution features:
+parameter sharing, sparsity of connection between layers,
+much less parameters comparing with fully connected layers
+
+7. Classic networks:
+LeNet-5, AlexNet, VGG, ResNet, Inception
+
+LeNet-5:
+32x32x1 5x5 s=1,
+28x28x6 avg-pool f=2 s=2,
+14x14x6 5x5 s=1,
+10x10x16 f=2 s=2 avg-pool,
+5x5x16,
+FC 120, FC 84, softmax 10
+sigmoid/tanh
+LeCun et al. 1998. Gradient-based learning ...
+
+AlexNet:
+227x227x3 11x11 s=4,
+55x55x96 3x3 s=2 max-pool,
+27x27x96 5x5 same,
+27x27x256 3x3 s=2 max-pool,
+13x13x256 3x3 same,
+13x13x384 3x3,
+13x13x384 3x3,
+13x13x256 3x3 s=2 max-pool,
+6x6x256,
+FC 9216, 4096, 4096, softmax 1000
+RELU, multiple GPUs,
+local response normalization (for all 256 channels)
+~60 million parameters
+Krizhevsky et al 2012. ImageNet classification ...
+
+VGG-16:
+CONV 3x3, s=1, same; max-pool 2x2, s=2
+224x224x3 -> CONV 64 x 2 times (224x224x64 2 times)
+-> POOL (112x112x64) -> CONV 128 x 2 times (112x112x128)
+-> POOL (56x56x128) -> CONV 256 x 3 (56x56x256)
+-> POOL (28x28x256) -> CONV 512 x 3 (28x28x512)
+-> POOL (14x14x512) -> CONV 512 x 3 (14x14x512)
+-> POOL (7x7x512) -> FC 4096 -> FC 4096
+-> softmax 1000
+~38 millions parameters
+Simonyan & Zisserman 2015. Very deep convolutional ...
+
+ResNet:
+Residual network combines of 5 residual blocks.
+One residual block has:
+a[l] -> linear -> RELU -> a[l+1] -> linear + a[l] -> RELU -> a[l+2]
+z[l+1] = W[l+1]a[l] + b[l+1]
+a[l+1] = g(z[l+1])
+z[l+2] = W[l+2]a[l+1] + b[l+2]
+a[l+2] = g(z[l+2] + a[l])
+=> when network goes deeper deeper,
+W[l+2] and b[l+2] might become zero, so z[l+2] becomes zero.
+By adding a[l] (activation), it helps to overcome that problem.
+a[l+2] = g(a[l]) when z[l+2] becomes zero,
+but not zero. So information in network will not be lost.
+Or error will not increase when network goes deeper.
+z[l+2] and a[l] need to have the same dimension.
+for that Ws is used to make them to have same dimension.
+=> a[l+2] = g(z[l+2] + Ws.a[l])
+He et al., 2015. Deep residual networks ...
+
+8. 1 x 1 Convolution:
+It is when filter size is 1x1.
+However, by setting number of filter nc,
+it can be used to change size of channels,
+to shrink or increase or keep the same the channels.
+eg: 28x28x192 -> f=1x1, nc=32 -> 28x28x32
+POOL helps to change nh and nw,
+1x1 CONV helps to change nc.
+Lin et al 2013. Network in network
+
+9. Inception network (GoogleNet):
+This is a inception module.
+28x28x192 (previous activation) |--------------------------> 1x1 CONV 64  -> 28x28x64
+                                |-> 1x1 CONV 96           -> 3x3 CONV 128 -> 28x28x128
+                                |-> 1x1 CONV 16           -> 5x5 CONV 32  -> 28x28x32
+                                |-> MAX POOL 3x3 s=1 same -> 1x1 CONV 32  -> 28x28x32
+                                                            => concat all -> 28x28x256
+computation cost is very high.
+1x1 CONV 64 is called bottle neck layer.
+Inception network has many inception modules.
+In the middle of the network, some branched are created
+using fully connected layer and softmax. So the prediction
+can be checked from the middle of network to see if
+the network was over-fitted or not ...
+This helps to make deeper network and prevent it to be over-fitted.
+Szegedy et al 2014. Going deeper with convolutions
+
+10. Transfer Learning:
+Usually, it is done by downloading pretrained models,
+then freezing all layers except softmax layer,
+or freezing several input layers and retraining only softmax layer,
+or retraining all layers including softmax layer.
+There is a fix function can map input X with a specific layer
+for retraining.
+
+11. Data augmentation:
+mirroring, random cropping, rotation, shearing, local warping
+color shifting, PCA color augmentation, distortion during
+training using one CPU thread, while training by other CPU thread.
+=> hand-engineering
+
+12. Object detection:
+Classification with localization is
+using softmax for classification and
+using a bounding box for localization.
+bx, by: center position of bounding box on the image
+bw: width of the bounding box
+bh: height of the bounding box
+the image will be marked as ((0,0), (1,1))
+output: Pc (probably of there is an object)
+        bx
+        by
+        bh
+        bw
+        c1  (class 1, eg: car)
+        c2  (class 2, eg: pedestrian)
+        c3  (class 3, eg: motorcycle)
+Pc = 1, there is an object
+Pc = 0, it is just background
+? for don't care, or no data, not object of interest
+
+Landmark detection is to mark other additional
+objects on the image for detection.
+Sliding windows detection is slow and cost is high.
+
+13. Turning FC layer into convolution layers:
+eg: from 5x5x16 -> FC 400 -> FC 400 -> softmax 4
+    to   5x5x16 -> CONV 5x5 nc=400 -> CONV 1x1 nc=400 -> CONV 1x1 nc=4
+                   1x1x400            1x1x400            1x1x4
+Sermanet et al 2014. OverFeat: Integrated recognition ...
+
+14. Convolution implementation of sliding windows:
+eg: 16x16x3 -> CONV 5x5 -> 12x12x16 -> MAX POOL 2x2 ->
+6x6x16 -> CONV 5x5 nc=400-> 2x2x400 -> CONV 1x1 nc=400
+-> 2x2x400 -> CONV 1x1 nc=4-> 2x2x4
+
+final output has 4 channels (windows) with size of 2x2,
+ creating sliding window effect.
+
+15. Intersection over union:
+evaluating object localization is Intersection of Union (IoU).
+IoU = size of intersection / size of remained window
+correct if IoU >= 0.5 (usually at least 0.6)
+
+When detecting an object on image, algorithm might detect
+an object multiple times.
+
+Non-max suppression algorithm is to remove all other
+bounding boxes and keep only the box which has the highest
+Pc.
+
+16. Anchor boxes:
+To detect two different objects which have the same
+center point of their bounding boxes.
+eg: a human standing near a car, so we need one box for human,
+and one box for car.
+
+17. YOLO algorithm:
+Redmon et al 2005. You Only Look Once: Unified real-time object detection
+output y is 3x3x2x8 or 3x3x16.
+3x3 is size of image
+2 because there are two anchor boxes
+8 because Pc, bx, by, bh, bw, plus 3 classes c1, c2, c3
+
+18. Regional proposal: R-CNN:
+- R-CNN = region with convolution network
+Girshik et al 2013. Rich feature hierarchies for accurate
+object detection and semantic segmentation
+A segmentation algorithm will be used to converse image,
+then pick up proposed regions,
+then apply CNN to just the proposed regions,
+not all regions of the image.
+- Fast R-CNN: Use convolution implementation of sliding windows
+to classify all the proposed regions (Girshik 2015)
+- Faster R-CNN: Use convolution network to propose regions
+(Ren et al 2016)
+
+All is still slower than YOLO.
+
+19. Face recognition:
+Face verification output is whether the input image is of the claimed person.
+Face recognition output is if the input image is any of a person in a database,
+or not recognized.
+
+One-short learning: create a function d(img1, img2) to learn similarity and
+compare these two images. If output of d() is smaller than a threshold value,
+then two images are from one person.
+
+20. Siamese network:
+a CNN network is used to converse x input of image into f(x) a FC of 128 neurons.
+each image x will be encoded into a f(x).
+then compare two images by d(x1, x2) = norm 2 of ||f(x1) - f(x2)||.
+so the smaller the distance is, the more similar two images are.
+Taigman et al 2014. DeepFace closing the gap to human ...
+
+21. Learning object, triplet loss:
+Learning object is to train CNN network by minimizing triplet loss
+a triplet is anchor image (A), positive image (P) and negative image (N).
+d(A,P) + alpha <= d(A,N)
+Loss(A, P, N) = max((d(A,P) - d(A,N) + alpha), 0)
+
+The best way is choosing A,P,N so that P and N are very similar to each other
+for training. So it is harder to train.
+The model will need to adjust alpha to make d(A,P) and d(A,N) distinguishable.
+Schroff et al 2015. FaceNet: A unified embedding for face recognition ...
+
+22. Face verification:
+Build a CNN network combining of two siamese networks,
+each siamese network will receive an image as its input.
+final output is softmax 1 classifies these two images are similar or not.
+
+image 1 -> siamese network 1 |
+                             |=> combine -> softmax 1 -> 0 (not similar) or 1 (similar)
+image 2 -> siamese network 2 |
+
+23. Neuron style transfer:
+content image C, style image S, generated image G
+Zeiler and Fergus 2013. Visualizing and understanding CNN ...
+
+image G is generated randomly,
+use gradient descent to minimize J(G)
+loss function J(G) = alpha.J-content(C,G) + beta.J-style(S,G)
+G = G - (alpha/2G)J(G)
+
+- Content cost function at layer l:
+Define how content image and generated image are similar,
+by looking at distance between C and G.
+J-content(C,G)[l] = 1/2(norm 2 of ||a[l](C) - a[l](G)||)
+
+- Style cost function at layer l:
+Define style as correlation between activations across channels.
+(How correlated are the activations across different channels?)
+
+Style matrix:
+Let a[l]i,j,k = activation at (i=nh, j=nw, k=nc).
+G[l] is nc[l] x nc[l]
+
+G[l]k,k' of S = sum sum (a[l]i,j,k(S) . a[l]i,j,k'(S))
+
+G[l]k,k' of G = sum sum (a[l]i,j,k(G) . a[l]i,j,k'(G))
+
+J-style(S,G)[l] = 1/square(2.nh[l].nw[l].nc[l])(norm 2 of ||G[l](S) - G[l](G)||)
+
+Gatys et al 2015. A neural algorithm of artistic style
+
+Note: CONV can also be used with 1d-data and 3D-data.
+
+
+
+
+
+
+

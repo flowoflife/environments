@@ -2,7 +2,7 @@ pandas
 matplotlib
 japanize-matplotlib
 seaborn
-jupyterlab==2.2.6
+jupyterlab
 scikit-learn
 # sktime
 # sktime-dl

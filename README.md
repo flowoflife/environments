@@ -91,7 +91,7 @@ brew install --cask rstudio
 
 # install others if necessary
 brew install --cask slack
-brew install --cask zoom
+brew install --cask zoomgit
 ```
 
 ## 2. Creating python environment using pyenv, pipenv, conda
@@ -207,6 +207,7 @@ conda update --all -y
 conda create -n my-env python==3.8.0 -y
 # conda create -p /path/to/project/my-env -f requirements.txt -y
 conda activate my-env
+# or from next time: pyenv shell miniconda3-4.7.12/envs/ana379
 conda install -c conda-forge package-name -y
 ```
 
