@@ -65,15 +65,6 @@ brew install --cask pycharm-ce
 # install Docker CE
 brew install --cask docker
 
-# install miniconda
-# brew install --cask miniconda
-# or pyenv install miniconda3.x.x
-# pyenv activate miniconda3.x.x
-# conda init "$(basename "${SHELL}")"
-# conda config --set auto_activate_base False
-# conda update -n base -c defaults conda -y
-# conda update --all -y
-
 # to enable OpenMP support on the default Apple-clang
 brew install libomp
 echo 'export CC=/usr/bin/clang' >> ~/.zshrc
@@ -95,14 +86,24 @@ brew install --cask zoomgit
 
 # install Apache Spark
 brew install apache-spark
+# brew will install dependency openjdk@11 for Apache Spark
+# because of that, we should remove other unnecessary versions of jdk on mac os
+sudo ln -sfn /usr/local/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
 # change x.x.x to the version of Apache Spark
 echo 'export SPARK_HOME=/usr/local/Cellar/apache-spark/x.x.x/libexec' >> ~/.zshrc
 echo 'export PYTHONPATH=/usr/local/Cellar/apache-spark/x.x.x/libexec/python/:$PYTHONP$' >> ~/.zshrc
+# cd to conf folder
+cd /usr/local/Cellar/apache-spark/3.1.1/libexec/conf
+# create log4j.properties from template
+cp log4j.properties.template log4j.properties
+# edit the log4j.properties file and change the log level from INFO to ERROR on log4j.rootCategory.
 # to start Apache Spark shell
 pyspark   # control D to exit
 # Spark context Web UI available at http://192.168.11.2:4040
 # or
 Spark-shell  # to use Scala
+# to run a spark file
+spark-submit file-name.py
 ```
 
 ## 2. Creating python environment using pyenv, pipenv, conda
@@ -218,8 +219,10 @@ conda update --all -y
 conda create -n my-env python==3.8.0 -y
 # conda create -p /path/to/project/my-env -f requirements.txt -y
 conda activate my-env
-# or from next time: pyenv shell miniconda3-4.7.12/envs/ana379
 conda install -c conda-forge package-name -y
+# from next time:
+# source /Users/your home folder/.pyenv/versions/miniconda3.x.x/bin/activate
+# conda activate my-env
 ```
 
 ## 3. Setting MySQL Server Docker Container
