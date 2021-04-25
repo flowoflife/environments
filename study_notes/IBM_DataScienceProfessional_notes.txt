@@ -530,7 +530,7 @@ SQL magic
 %load_ext sql
 
 %sql ibm_db_sa://username:password@hostname:port/database-name
-%sql ibm_db_sa://sqd0241x:2bggpm6ftmlpf@dashdb-txn-sbox-yp-dal09-12.services.dal.bluemix.net:50000/BLUDB
+%sql ibm_db_sa://abc:abc@abc.services.dal.bluemix.net:50000/BLUDB
 
 country = "Canada"
 %sql select * from INTERNATIONAL_STUDENT_TEST_SCORES where country = :country
