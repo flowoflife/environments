@@ -322,9 +322,4 @@ Gatys et al 2015. A neural algorithm of artistic style
 
 Note: CONV can also be used with 1d-data and 3D-data.
 
-
-
-
-
-
-
+End!

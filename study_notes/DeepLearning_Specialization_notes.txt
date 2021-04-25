@@ -427,12 +427,14 @@ Theano, Torch
 26.1 Orthogonalization:
 Choose train/dev/test datasets wisely, logically, randomly, or by time (98%, 1%, 1%)
 Single number evaluation metric is better than many metrics
-Change or try different train/dev/test sets, other metrics, optimizer, regularization, cost function, ... when needed.
+Change or try different train/dev/test sets, other metrics, optimizer,
+regularization, cost function, ... when needed.
 
-Need to understand human level performance/error, then compare results (training and dev/test
-errors) with human level errors to
-choose bias avoidance tactics (bigger models, longer training, better optimization, decrease regulation,...)
-or variance avoidance tactics (increase regulation, bigger dev set, avoid overfit to dev set and training set...).
+Need to understand human level performance/error, then compare results
+(training and dev/test errors) with human level errors to
+choose bias avoidance tactics (bigger models, longer training, better optimization,
+decrease regulation,...) or variance avoidance tactics (increase regulation,
+bigger dev set, avoid overfit to dev set and training set...).
 
 Human level error
                    | -> bias avoidable tactics (reduce bias)
@@ -440,9 +442,11 @@ Training error
                    | -> Variance avoidable tactics (reduce variance)
 Dev/Test error
 
-until getting closer or surpass human level error (team of experts, choose the lowest error)
+until getting closer or surpass human level error (team of experts, choose the
+lowest error)
 
-26.2 Carrying out "error analysis" to evaluate dev set to see quality of data, count error rate, to find mis-recognized data/labels, to improve blurry images, etc
+26.2 Carrying out "error analysis" to evaluate dev set to see quality of data,
+count error rate, to find mis-recognized data/labels, to improve blurry images, etc
 
 Example of splitting train/test data sets:
 200k of web crawling images
@@ -452,8 +456,11 @@ Example of splitting train/test data sets:
 
 -> Avoid mismatched data between training and dev/test sets
 
-When error of dev/test set is much bigger than error of training set, try to use a training-dev set which is splitted randomly from training set (to have the same distribution) to test model.
-If the error of training-dev test is still bigger than error of training set, then this is problem of high variance problem, or
+When error of dev/test set is much bigger than error of training set, try to
+use a training-dev set which is splitted randomly from training set (to have
+the same distribution) to test model.
+If the error of training-dev test is still bigger than error of training set,
+then this is problem of high variance problem, or
 problem of the model.
 
 If error of training-dev set is low as error of training set,
@@ -490,7 +497,6 @@ is probably useful in another part of the image.
 small number of inputs.
 
 => reduce overfit
-
 
 Tips for doing well on benchmarks/winning competitions:
 - train several networks independently and average their outputs
