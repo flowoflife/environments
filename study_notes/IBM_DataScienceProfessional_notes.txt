@@ -1,0 +1,631 @@
+Data Sciences Notes (edX courses)
+Noted by: Phan Hoang Phuong
+2020 Jun 01
+
+=====
+
+Open source tools:
+
+    Data Management: the process of persisting and retrieving data
+
+    Data Integration and Transformation: Extract, Transform, and Load, or “ETL” is the process of
+    retrieving data from remote data management systems, transforming and loading it into a local data
+    management system.
+
+    Data Visualization: an initial data exploration process, as well as being part of a final deliverable
+
+    Model Building: the process of creating a machine learning or a deep learning model
+
+    Model deployment: making a machine learning or a deep learning model available to third-party
+    applications
+
+    Model monitoring and assessment: continuous performance quality checks on the deployed
+    models for accuracy, fairness, and adversarial robustness
+
+    Code asset management: using versioning and other collaborative features to facilitate
+    teamwork
+
+    Data asset management: bringing the same versioning and collaborative components to data, supporting
+    replication, backup, and access right management
+
+    Development environments: Integrated Development Environments, or “IDEs”
+
+    Execution environments: tools of data preprocessing, model training, and deployment
+
+=====
+
+Open Source Tools for Data Science:
+
+Data management tools:
+    Rational databases such as MySQL, PostgreSQL
+
+    NoSQL databases such as MongoDB, Apache CouchDB, and Apache Cassandra
+
+    File-based tools such as the Hadoop File System or Cloud File systems like Ceph
+
+    Elasticsearch is mainly used for storing text data and creating a search index for fast document retrieval
+
+Data integration and transformation tools: "ETL" and "ELT", “data refinery and cleansing”
+    Apache AirFlow: originally created by AirBNB
+
+    KubeFlow: to execute data science pipelines on top of Kubernetes
+
+    Apache Kafka: originated from LinkedIn
+
+    Apache Nifi: with a very nice visual editor
+
+    Apache SparkSQL: enabling to use ANSI SQL and scaling up to compute clusters of 1000s of nodes
+
+    NodeRED: with a visual editor, consuming so little in resources like a Raspberry Pi
+
+Data visualization tools:
+    Hue: visualization from SQL queries
+
+    Kibana: a data exploration and visualization web application, is limited to Elasticsearch
+
+    Apache Superset: a data exploration and visualization web application
+
+Model deployment tools:
+    Apache PredictionIO: currently only supports Apache Spark ML models for deployment, but
+    support for all sorts of other libraries is on the roadmap.
+
+    Seldon: supports nearly every framework, including TensorFlow, Apache SparkML, R, and scikit-learn.
+    Seldon can run on top of Kubernetes and Redhat OpenShift.
+
+    MLeap: supports to deploy SparkML models
+
+    TensorFlow service: supports its models
+
+    TensorFlow Lite: to deploy to an embedded device like a Raspberry Pi or a smartphone
+
+    TensorFlow.JS: to deploy to a web browser
+
+Model monitoring tools:
+    ModelDB: a machine model metadatabase supports Apache Spark ML Pipelines and scikit-learn
+
+    Prometheus: a generic, multi-purpose tool, widely used for machine learning model
+    monitoring, although it’s not specifically made for this purpose.
+
+    The IBM AI Fairness 360 open source toolkit: detects and mitigates against
+    bias in machine learning models. Model performance is not exclusively measured
+    through accuracy. Model bias against protected groups like gender or race is
+    also important.
+
+    The IBM Adversarial Robustness 360 Toolbox: detects vulnerability to adversarial
+    attacks and helps make the model more robust. Machine learning models, especially
+    neural-network-based deep learning models, can be subject to adversarial attacks,
+    where an attacker tries to fool the model with manipulated data or by manipulating
+    the model itself.
+
+    The IBM AI Explainability 360 Toolkit: finds similar examples within a dataset
+    that can be presented to a user for manual comparison, illustrates training
+    for a simpler machine learning model by explaining how different input variables
+    affect the final decision of the model.
+
+Code asset management tools: also referred to as version management or version control
+    – Git is now the standard.
+
+    GitHub: provides hosting for software development version management.
+
+    GitLab: a fully open source platform that you can host and manage yourself.
+
+    Bitbucket: data asset management, also known as data governance or data lineage.
+
+    Apache Atlas: is a tool that versions and annotates metadata.
+
+    ODPi Egeria: an open ecosystem (the Linux Foundation) offers a set of open APIs,
+    types, and interchange protocols that metadata repositories use to share and
+    exchange data.
+
+    Kylo: an open source data lake management software platform that provides
+    extensive support for a wide range of data asset management tasks.
+
+Open Source Tools for Data Science:
+
+    Jupyter: a tool for interactive Python programming. Jupyter kernels are
+    encapsulating the different interactive interpreters for the different
+    programming languages.
+
+    Jupyter Notebooks is the ability to unify documentation, code, output
+    from the code, shell commands, and visualizations into a single document.
+
+    JupyterLab: the next generation of Jupyter Notebooks.
+
+    Apache Zeppelin: provides a similar experience as of Jupyter.
+    One key differentiator is the integrated plotting capability.
+    In Jupyter Notebooks, you are required to use external libraries in Apache Zeppelin,
+    and plotting doesn’t require coding. You can also extend these capabilities
+    by using additional libraries.
+
+    RStudio: introduced in 2011, exclusively runs R and all associated R libraries.
+    However, Python development is possible and R is therefore tightly integrated into this
+    tool to provide an optimal user experience.
+    RStudio unifies programming, execution, debugging, remote data access, data exploration, and
+    visualization into a single tool.
+
+    Spyder: tries to mimic the behaviour of RStudio to bring its functionality to the Python world.
+    But in the Python world, Jupyter is used more frequently.
+
+    Sometimes your data doesn’t fit into a single computer’s storage or main memory capacity.
+    That’s where cluster execution environments come in.
+
+    Apache Spark: a batch data processing engine, capable of processing huge amounts
+    of data file by file. with the key property of linear scalability.
+    This means, if you double the number of servers in a cluster, you’ll also roughly double
+    its performance.
+
+    Apache Flink: is a stream processing image, with its main focus on processing
+    real-time data streams.
+
+    Although engine supports both data processing paradigms, Apache Spark is usually the choice
+    in most use cases.
+
+    Ray: focuses on large-scale deep learning model training.
+
+    KNIME: from the University of Konstanz in 2004.
+    KNIME has a visual user interface with drag-and-drop capabilities.
+    Knime can be be extended by programming in R and Python, and has connectors to Apache
+    Spark.
+
+    Orange: less flexible than KNIME, but easier to use.
+
+=====
+
+Commercial Tools for Data Science:
+
+    Examples: Oracle Database, Microsoft SQL Server, and IBM Db2.
+    Informatica Powercenter and IBM InfoSphere DataStage are the leaders,
+    followed by products from SAP, Oracle, SAS, Talend, and Microsoft.
+
+    These tools support design and deployment of ETL data-processing pipelines
+    through a graphical interface. They also provide connectors to most of the
+    commercial and open source target information systems.
+
+    Watson Studio: a fully integrated development environment for data scientists.
+    It’s usually consumed through the cloud. There is also a desktop version available.
+    Watson Studio Desktop: includes a component called Data Refinery, which enables
+    the defining and execution of data integration processes in a spreadsheet style.
+    It can help visualization such as relation of different columns in a table to each other.
+    A cloud version has SPSS Modeler. Watson Studio Desktop combines Jupyter Notebooks
+    with graphical tools to maximize data scientists’ performance.
+    Watson Studio, together with Watson Open Scale, is a fully integrated tool
+    covering the full data science life cycle and all the tasks we’ve discussed.
+    They can be deployed in a local data center on top of Kubernetes or RedHat OpenShift.
+
+    The most prominent commercial BI tools are: Tableau, Microsoft Power BI, and IBM Cognos
+    Analytics. Their main focus is to create visually attractive and easy-to-understand
+    reports and live dashboards.
+
+    SPSS Modeler and SAS Enterprise Miner: data mining products.
+
+    SPSS Modeler supports the exporting of models as Predictive Model Markup Language,
+    or PMML, which can be read by many other commercial and open software packages.
+
+    ===>>> Model monitoring is a new discipline and there are currently no relevant commercial tools
+    available.
+
+    As a result, open source is the first choice. The same is true for code asset management.
+    Open source with Git and GitHub is the effective standard. <<<===
+
+    Informatica Enterprise Data Governance and IBM: provide tools for data asset management,
+    (data governance or data lineage). Data must be versioned and annotated using metadata.
+
+    The IBM InfoSphere Information Governance Catalog: covers functions like data dictionary,
+    which facilitates discovery of data assets. Each data asset is assigned to
+    a data steward -- the data owner. The data owner is responsible for that data
+    asset and can be contacted. Data lineage is also covered; this enables a user
+    to track back through the transformation steps followed in creating the data assets.
+    The data lineage also includes a reference to the actual source data.
+    Rules and policies can be added to reflect complex regulatory and business requirements
+    for data privacy and retention.
+
+    H2O Driverless AI: covers the complete data science life cycle.
+    Since cloud products are a newer species, they follow the trend of having multiple tasks
+    integrated in tools.
+
+    Microsoft Azure Machine Learning: a fully cloud-hosted offering supporting
+    the complete development life cycle of all data science, machine learning, and AI tasks.
+
+    Since operations and maintenance are not done by the cloud provider, as is the case with
+    Watson Studio, Open Scale, and Azure Machine Learning, this delivery model should not be
+    confused with Platform or Software as a Service -- PaaS or SaaS.
+
+    In data management, with some exceptions, there are SaaS versions of existing open source
+    and commercial tools. SaaS stands for “software as a service.” It means that
+    the cloud provider operates the tool for customers in the cloud.
+
+    Amazon Web Services DynamoDB: a NoSQL database that allows
+    storage and retrieval of data in a key-value or a document store format.
+
+    Cloudant: a database-as-a-service offering, based on the open source Apache CouchDB.
+    It has an advantage: although complex operational tasks like updating, backup, restore, and
+    scaling are done by the cloud provider, under the hood this offering is compatible with
+    CouchDB. Therefore, the application can be migrated to another CouchDB server without changing
+    the application.
+
+    IBM Db2: a software-as-a-service offering in the cloud, taking operational tasks away from the user.
+    Data transformation steps are not done by a data integration team but are pushed
+    towards the domain of the data scientist or data engineer.
+
+    Informatica Cloud Data Integration: data integration tool.
+
+    IBM Data Refinery: data integration tool, enables transformation of large amounts
+    of raw data into consumable, quality information in a spreadsheet-like user interface.
+    IBM Data Refinery also offers data exploration and visualization functionality in Watson
+    Studio.
+
+    An example of a smaller company’s cloud-based data visualization tool is DataMeer.
+    IBM offers it’s famous Cognos Business intelligence suite as cloud solution as well.
+
+    A heat map shows two dependent data fields, one on the y axis and one as color intensity.
+    A tree map shows distribution of subsets within a set, the famous pie chart does the same
+    but in a non-hierarchical manner, and finally, a word cloud pops out significant terms in
+    a document corpus.
+
+    Model building can be done using a service such as Watson Machine Learning.
+    Watson Machine Learning can train and build models using various open source libraries.
+    It can also be used to deploy a model and make it available to consumers
+    using a REST interface.
+
+    Google has a similar service on their cloud called AI Platform Training.
+
+    The SPSS Collaboration and Deployment Services can be used
+    to deploy any type of asset created by the SPSS software tools suite.
+
+    In addition, commercial software can export models in an open format.
+    As an example, SPSS Modeler supports exporting models as Predictive Model Markup Language,
+    or “PMML,” which can be read by numerous other commercial and open software packages.
+
+    Amazon SageMaker Model Monitor is an example of a cloud tool that continuously monitors
+    deployed machine learning and deep learning models. This is also the case for Watson OpenScale.
+
+======
+
+Open data:
+
+1. Open data portal list
+
+- http://datacatalogs.org
+
+2. Government, intergovernmental and organization websites
+
+- http://data.un.org
+- https://www.data.gov
+- https://www.europeandataportal.eu/en/
+
+3. Kaggle
+
+- https://www.kaggle.com/datasets/
+
+4. Google data set search
+
+- https://datasetsearch.research.google.com
+
+5. IBM Data Asset eXchange (private with fee): DAX
+
+- https://developer.ibm.com/exchanges/data/
+
+6. Others:
+
+- www.allrecipes.com
+- www.epicurious.com
+- www.menupan.com
+
+=====
+
+Data Science Methodology - 10 answers
+
+From problem to approach:
+1. What is the problem that you are trying to solve?
+2. How can you use data to answer the question?
+
+Working with the data:
+3. What data do you need to answer the question?
+4. Where is the data coming from (identify all sources) and how will you get it?
+5. Is the data that you collected representative of the problem to be solved?
+6. What additional work is required to manipulate and work with the data?
+
+Deriving the answer:
+7. In what way can the data be visualized to get to the answer that is required?
+8. Does the model used really answer the initial question or dose it need to be adjusted?
+9. Can you put the model into practice?
+10. Can you get constructive feedback into answering the question?
+
+=====
+
+The Cross Industry Standard Process for Data Mining (CRISP-DM methodology) by John Rollins of IBM
+
+1. Business Understanding:
+What is the goals? how to split the goals into detail objectives?
+
+This stage is the most important because this is where the intention of the project is outlined.
+Foundational Methodology and CRISP-DM are aligned here. It requires communication and clarity.
+The difficulty here is that stakeholders have different objectives, biases, and modalities of
+relating information. They don’t all see the same things or in the same manner. Without clear,
+concise, and complete perspective of what the project goals are resources will be needlessly expended.
+
+One needs to define goals and objectives. By breaking down objectives and structured discusssions
+can take place where priorities can be identified in a way that can lead to organizing and planning
+on how to tackle the problem. Depending on the problem, different stakeholders will need to be
+engaged in the discussion to help determine requirements and clarify questions.
+
+Understanding of the problem also helps to select the right analytic approach or the model approach,
+e.g. regression or classification.
+
+The main purpose of the analytic approach is identifying what type of patterns will be needed to
+address the posed question most effectively.
+
+From business understanding, you will also decide analytic approach or the model. Based on type of the
+model, you will decice what data are needed for the model and how to collect them.
+
+=> Data Collecting
+
+Techniques such as descriptive statistics and visualization can be applied to the dataset to assess
+the content, quality, and initial insights about the data.
+
+2. Data Understanding:
+Is the data you collected representative of the problem to be solved?
+
+Data understanding relies on business understanding. Data is collected at this stage of the process.
+The understanding of what the business wants and needs will determine what data is collected, from
+what sources, and by what methods. CRISP-DM combines the stages of Data Requirements, Data Collection,
+and Data Understanding from the Foundational Methodology outline.
+
+Descriptive statistics include univariate statistics such as mean, median, min, max, SD, and pairwise
+correlations, and histogram.
+
+Pairwise correlations are used to see how closely certain variables related,
+and which ones, if any, were very highly correlated, meaning they would be essentially redundant, thus
+making only one relevant for modeling.
+
+Histogram of the variables were examined to understand their distributions, and which sorts of data
+preparation may be needed to make the variable more useful in a model.
+
+3. Data Preparation:
+What are the ways in which data is prepared?
+
+Once the data has been collected, it must be transformed into a useable subset unless it is determined
+that more data is needed. Once a dataset is chosen, it must then be checked for questionable, missing,
+or ambiguous cases. Data Preparation is common to CRISP-DM and Foundational Methodology.
+
+Feature engineering is the process of using domain knowledge of the data to create features that make
+the machine learning algorithm work.
+
+4. Modeling:
+What is purpose of data modeling?
+What are some characteristics of this process?
+
+Once prepared for use, the data must be expressed through whatever appropriate models, give meaningful insights,
+and hopefully new knowledge. This is the purpose of data mining: to create knowledge information that has
+meaning and utility. The use of models reveals patterns and structures within the data that provide insight
+into the features of interest. Models are selected on a portion of the data and adjustments are made if necessary.
+Model selection is an art and science. Both Foundational Methodology and CRISP-DM are required for the subsequent stage.
+
+This process focuses on developing models that are either descriptive or predictive. Descriptive model might
+examine things like: if a person did this, then they are likely to prefer that (=> predict trends, abstract, similarity).
+
+A predictive model tries to yield yes/no, or stop/go type outcomes (=> predict results, concrete).
+
+5. Evaluation
+Does the model really answer the initial question or does it need to be adjusted?
+
+If the model is a predictive model, a decision tree can be used to evaluate. ROC can be
+used to evaluate the model.
+
+If the model is a descriptive model, one in which relationships are being assessed, then
+a testing set with known outcomes can be applied, and model can be refined as needed.
+
+The selected model must be tested. This is usually done by having a pre-selected test, set to run the trained
+model on. This will allow you to see the effectiveness of the model on a set it sees as new. Results from this
+are used to determine efficacy of the model and foreshadows its role in the next and final stage.
+
+6. Deployment:
+
+In the deployment step, the model is used on new data outside of the scope of the dataset and by new stakeholders.
+The new interactions at this phase might reveal the new variables and needs for the dataset and model. These
+new challenges could initiate revision of either business needs and actions, or the model and data, or both.
+
+CRISP-DM is a highly flexible and cyclical model. Flexibility is required at each step along with communication
+to keep the project on track. At any of the six stages, it may be necessary to revisit an earlier stage and make
+changes. The key point of this process is that it’s cyclical; therefore, even at the finish you are having
+another business understanding encounter to discuss the viability after deployment. The journey continues.
+
+7. Evaluation and Feedback:
+
+    The importance of stakeholder input.
+    To consider the scale of deployment.
+    The importance of incorporating feedback to refine the model.
+    The refined model must be redeployed.
+    This process should be repeated as often as necessary.
+
+The process from Modelling, Evaluation, Deployment, Feedback is iterated until the model produces the best outcomes.
+
+=====
+
+SQL - Structured English Query Language
+Rational Database
+
+ERD: Entity Relation Diagram, each entity becomes a table which has many attributes.
+Each attribute is a column of the table.
+Data types include character (var, varchar), number (int, decimal), and date/time.
+
+”Service credentials" is where new credential can be created. A credential is a database instance,
+where you can setup manually all connection info for an app, or external customer to your DB on cloud.
+
+SQL statements: Data Definition Language (DDL) and Data Manipulation Language (DML)
+DDL: create, alter, truncate, drop (for table, column, type)
+DML: CRUD = create, read, update, delete (for row)
+DML: insert, select, update, delete (for row)
+
+Some examples:
+
+Result of Select statement is a result set or result table.
+Date: YYYYMMDD 8 digits
+Time: HHMMSS 6 digits
+Timestamp: YYYYXXDDHHMMSSZZZZZZ 20 digits
+
+CREATE TABLE provinces (id CHAR(2) PRIMARY KEY NOT NULL,
+                        name VARCHAR(24)) ;
+
+select COLUMN1, COLUMN2, ... from TABLE1 ;
+
+select count(*) from COUNTRY ;
+
+select * from COUNTRY where ID < 5 ;
+
+select * from COUNTRY where CCODE = 'CA' limit 10 ;
+
+insert into [table name] (column names) values (values of id 1) (values of id 2) (...) ;
+
+update [table name] set [column names]='value' where id = 'id value' ;
+
+delete from [table name] where id in (list of id) where (condition) ;
+
+select title, pages from Book where pages >= 290 and pages <= 300 ;
+
+select name from author where first_name like "R%" ;
+
+select name from author where country in ("US", "JP") ;
+
+select name from author order by name desc ; # sort in descending order
+
+select name, page from author order by 2 ; # sort in ascending value of page column (column number 2)
+
+select distinct(country) from author order by 1 ; # remove duplicate from result set
+
+select country, count(country) as count from author group by country having count(country) > 5 ;
+# count authors who are from the same countries, get group of author which are bigger than 5 authors
+
+select * from author where salary > (select AVG(salary) from author) ;
+
+select * from (select name, age, phone, dept from author) as allinfo ;
+
+select * from author, job ;
+
+select * from author, job where author.id = job.id ;
+
+select A.name, J.salary from author A, job J where A.id = J.id ;
+
+SUM(), MIN(), MAX(), AVG(), YEAR(), MONTH(), DAY(),
+DAYOFMONTH(), DAYOFWEEK(), DAYOFYEAR(), WEEK(), HOUR(),
+MINUTE(), SECOND(), CURRENT_DATE(), CURRENT_TIME()
+
+=====
+
+SQL - API
+
+MySQL: MySQL C API, MySQL Connector/Python
+PostgreSQL: psycopg2
+IBM DB2: ibm_db
+SQL Server: dblib API
+Database access for Microsoft Windows OS: ODBC
+Oracle: OCI
+Java: JDBC
+(MongoDB: PyMongo)
+
+=====
+
+SQL magic
+
+%load_ext sql
+
+%sql ibm_db_sa://username:password@hostname:port/database-name
+%sql ibm_db_sa://sqd0241x:2bggpm6ftmlpf@dashdb-txn-sbox-yp-dal09-12.services.dal.bluemix.net:50000/BLUDB
+
+country = "Canada"
+%sql select * from INTERNATIONAL_STUDENT_TEST_SCORES where country = :country
+
+import pandas
+chicago_socioeconomic_data = pandas.read_csv('https://data.cityofchicago.org/resource/jcxq-k9xf.csv')
+%sql PERSIST chicago_socioeconomic_data
+
+in IBM DB2, syscat.tables and syscat.columns
+
+select tabschema, tabname, create_time from syscat.tables where tabschema = 'username';
+
+select * from syscat.columns where tabname = 'dogs';
+%sql select distinct(NAME), COLTYPE, LENGTH from SYSIBM.SYSCOLUMNS where TBNAME = 'SCHOOLS';
+
+%sql SELECT Name_of_School, REPLACE(Average_Student_Attendance, '%', '') \
+     from SCHOOLS \
+     order by Average_Student_Attendance \
+     fetch first 5 rows only;
+
+=====
+
+Recommender System:
+
+A. Types:
+1. Content-based system tries to figure out what a user's favorite aspects of an
+item are, and then make recommendations on items that share those aspects.
+
+Based on what users click or like on what products, build users' profiles. Multiply
+user profile with other new products's profiles to get a weighted profile matrix.
+Sort this matrix and use it to recommend new products.
+
+2. Collaborative filtering finds similar groups of users, and provide recommendations
+based on similar tastes within that group.
+
+It can be user-based (users' neighborhood) or item-based (items' similarity) approaches.
+
+Challenges of collaborative filtering:
+- Data Sparsity: Users in general rate only a limited number of items
+- Cold start: Difficult in recommendation to new users or new items
+- Scalability: Increase in number of users or items
+
+3. Hybrid system
+
+B. Implementation:
+1. Memory-based:
+- Uses the entire user-item dataset to generate a recommendation
+- Uses statistical techniques to approximate users or items e.g. Pearson correlation,
+cosine similarity, euclidean distance, etc
+
+2. Model-based:
+- Develops a model of users in an attempt to learn their preferences
+- Models can be created using Machine Learning like regression, clustering,
+classification, etc
+
+=====
+
+Summary:
+
+1. Setting goals:
+
+Cần xác định mục đích (goal) thu thập data. Từ đó xác định chi phí và lợi ích của việc thu thập
+data cho mục đích đó (cost and benefit). Cần cân nhắc giữa cost benefit trade-off và chất lượng
+data thu được (accuracy), cuối cùng ảnh hưởng đến kết quả của dự án.
+
+2. Selecting data:
+
+Lựa chọn thu thập data nào, có sẵn hay không và chi phí ra sao là rất quan trọng.
+
+3. Processing data:
+
+Cần xác định missing data là do ngẫu nhiên hay là do có tính hệ thống. Nếu là do ngẫu nhiên thì
+có thể xử lý đơn giản. Nếu do có tính hệ thống thì cần xác định tác động của missing data đối với
+kết quả phân tích, và cần xác định xem có thể loại bỏ missing data hay không, nên xử lý missing
+data như thế nào.
+
+4. Transforming data:
+
+Để tạo thêm những feature mới, giảm chiều dữ liệu, đổi kiểu dữ liệu từ continuous sang thành category …
+
+5. Storing data:
+
+Cần store data ở dạng có thể lấy ra và ghi vào một cách dễ dàng, thuận tiện nhất cho data scientist
+phân tích.
+
+6. Mining data:
+
+Từ đây bắt đầu vào các bước phân tích data, bao gồm các phương pháp parametric và non-parametric,
+và machine learning algorithms. Ban đầu bắt đầu từ việc data visualization, multidimensional views
+of data, nhằm mục đích tìm hiểu trends hidden in data.
+
+7. Evaluating mining results:
+
+Sau bước mining data thì cần test khả năng predict của model sử dụng observed data (in-sample forecast)
+
+=====
+
+END!
