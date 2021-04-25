@@ -529,14 +529,13 @@ SQL magic
 
 %load_ext sql
 
-%sql ibm_db_sa://username:password@hostname:port/database-name
-%sql ibm_db_sa://abc:abc@abc.services.dal.bluemix.net:50000/BLUDB
+%sql ibm_db_sa://abc:abc@abc.bluemix.net:xxxxx/BLUDB
 
 country = "Canada"
 %sql select * from INTERNATIONAL_STUDENT_TEST_SCORES where country = :country
 
 import pandas
-chicago_socioeconomic_data = pandas.read_csv('https://data.cityofchicago.org/resource/jcxq-k9xf.csv')
+chicago_socioeconomic_data = pandas.read_csv('https://data.filename.csv')
 %sql PERSIST chicago_socioeconomic_data
 
 in IBM DB2, syscat.tables and syscat.columns
