@@ -507,12 +507,26 @@ Tips for doing well on benchmarks/winning competitions:
   use open source implementations if possible
   use pretrained models and fine-tune on your datasets
 
+28. Object Localization
 
+How to label object on the image:
+y = {Pc, bx, by, bh, bw, C1, C2, C3}
+coordinates of top, left point of image is (0, 0)
+coordinates of bottom, right point of image is (1, 1)
+Pc = 1 if there is object
+Pc = 0 if there is no object
+(bx, by) is coordinates of center point of the square frame drawing around the object
+bh = height value of the square frame
+bw = width value of the square frame
+C1, C2, C3 are 0 or 1 (one hot) to label the class of the object
+(eg, object classes are car, human, cat, dog, trafic light, etc)
 
+add more points on the image of objects => landmark detection
 
+29. Object detection
 
+Using "sliding windows technique", but computation cost and processing time are
+problems.
 
-
-
-
+30. Convolutional implementation of sliding windows
 
