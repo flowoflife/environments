@@ -322,4 +322,52 @@ Gatys et al 2015. A neural algorithm of artistic style
 
 Note: CONV can also be used with 1d-data and 3D-data.
 
-End!
+=> End!
+
+========================
+Updates: 2021 May 08
+========================
+
+24. MobileNet:
+From a normal convolution:
+input(6 x 6 x nc) -> filter(3 x 3 x nc x nc') -> output(4 x 4 x nc')
+nc = 3 = color channel, nc' = 5 = number of filters
+Cost computation = 2160
+
+To Depthwise Separable Convolution:
+by changing filter(3, 3) to Depthwise and Pointwise filters
+input(6 x 6 x nc) -> Depthwise(3 x 3 x nc) -> (4 x 4 x nc) -> Pointwise(1 x 1 x nc x nc')
+-> output(4 x 4 x nc')
+Cost computation = 672
+
+=> Cost computation is reduced -> good for mobile
+
+Howard et al 2017 MobileNets: Efficient Convolutional Neural Networks for Mobile
+Vision Applications
+
+MobileNet v1: 13 times of Depthwise and Pointwise (Projection), followd by POOL and FC softmax
+
+MobileNet v2:
+input -> 17 times of | [expansion(1 x 1 x W) -> Depthwise(Y) -> Pointwise(Z)] -> | POOL -> FC softmax
+                     | ----------> Residual Connection ------------------> |
+
+W = 30, Y = 20, Z = 20
+
+Sandler et al 2019, MobileNetV2: Inverted Residuals and Linear Bottlenecks
+
+In Depthwise Separable Convolution you:
+- Perform two steps of convolution.
+- You convolve the input image with nc number of nh x nw filters (nc is the number
+of color channels of the input image)
+- The final output is of the dimension nout x nout x nc' (where nc' is the number of
+filters used in the previous convolution step)
+- For the “Depthwise” computations each filter convolves with only one corresponding
+color channel of the input image.
+
+25. EfficientNet:
+To scale up to make more efficient network:
+
+- Increase resolution of images
+- Make the networkd deeper
+- Make the network wider
+
