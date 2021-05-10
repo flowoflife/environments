@@ -133,6 +133,7 @@ Or error will not increase when network goes deeper.
 z[l+2] and a[l] need to have the same dimension.
 for that Ws is used to make them to have same dimension.
 => a[l+2] = g(z[l+2] + Ws.a[l])
+
 He et al., 2015. Deep residual networks ...
 
 8. 1 x 1 Convolution:
@@ -141,8 +142,8 @@ However, by setting number of filter nc,
 it can be used to change size of channels,
 to shrink or increase or keep the same the channels.
 eg: 28x28x192 -> f=1x1, nc=32 -> 28x28x32
-POOL helps to change nh and nw,
-1x1 CONV helps to change nc.
+POOL helps to change nh and nw, but not nc
+1x1 CONV helps to change nc, but not nh and nw
 Lin et al 2013. Network in network
 
 9. Inception network (GoogleNet):
@@ -160,6 +161,12 @@ using fully connected layer and softmax. So the prediction
 can be checked from the middle of network to see if
 the network was over-fitted or not ...
 This helps to make deeper network and prevent it to be over-fitted.
+
+- Inception blocks usually use 1x1 convolutions to reduce the input data volume’s
+size before applying 3x3 and 5x5 convolutions.
+- A single inception block allows the network to use a combination of 1x1, 3x3,
+5x5 convolutions and pooling.
+
 Szegedy et al 2014. Going deeper with convolutions
 
 10. Transfer Learning:
@@ -194,6 +201,7 @@ output: Pc (probably of there is an object)
         c3  (class 3, eg: motorcycle)
 Pc = 1, there is an object
 Pc = 0, it is just background
+Pc is confidence of an object being present in the bounding box.
 ? for don't care, or no data, not object of interest
 
 Landmark detection is to mark other additional
@@ -216,7 +224,7 @@ final output has 4 channels (windows) with size of 2x2,
 
 15. Intersection over union:
 evaluating object localization is Intersection of Union (IoU).
-IoU = size of intersection / size of remained window
+IoU = size of intersection part / union of two boxes (not repeat intersection part)
 correct if IoU >= 0.5 (usually at least 0.6)
 
 When detecting an object on image, algorithm might detect
@@ -224,13 +232,14 @@ an object multiple times.
 
 Non-max suppression algorithm is to remove all other
 bounding boxes and keep only the box which has the highest
-Pc.
+Pc (probability of detection).
 
 16. Anchor boxes:
 To detect two different objects which have the same
 center point of their bounding boxes.
 eg: a human standing near a car, so we need one box for human,
-and one box for car.
+and one box for car. Then y will have 16 numbers, 8 for each box
+y = {Pc1, bx1, by1, bh1, bw1, c11, c12, c13, Pc2, bx2, by2, bh2, bw2, ...}
 
 17. YOLO algorithm:
 Redmon et al 2005. You Only Look Once: Unified real-time object detection
@@ -351,7 +360,7 @@ MobileNet v2:
 input -> 17 times of | [expansion(1 x 1 x W) -> Depthwise(Y) -> Pointwise(Z)] -> | POOL -> FC softmax
                      | ----------> Residual Connection ------------------> |
 
-W = 30, Y = 20, Z = 20
+W = 5, Y = 30, Z = 20
 
 Sandler et al 2019, MobileNetV2: Inverted Residuals and Linear Bottlenecks
 
