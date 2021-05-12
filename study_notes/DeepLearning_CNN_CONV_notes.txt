@@ -264,8 +264,8 @@ to classify all the proposed regions (Girshik 2015)
 All is still slower than YOLO.
 
 19. Face recognition:
-Face verification output is whether the input image is of the claimed person.
-Face recognition output is if the input image is any of a person in a database,
+Face verification output whether the input image is of the claimed person.
+Face recognition output whether the input image is any of a person in a database,
 or not recognized.
 
 One-short learning: create a function d(img1, img2) to learn similarity and
@@ -277,34 +277,46 @@ a CNN network is used to converse x input of image into f(x) a FC of 128 neurons
 each image x will be encoded into a f(x).
 then compare two images by d(x1, x2) = norm 2 of ||f(x1) - f(x2)||.
 so the smaller the distance is, the more similar two images are.
-Taigman et al 2014. DeepFace closing the gap to human ...
+Taigman et al 2014. DeepFace closing the gap to human level performance
 
-21. Learning object, triplet loss:
-Learning object is to train CNN network by minimizing triplet loss
-a triplet is anchor image (A), positive image (P) and negative image (N).
+21. Learning objective, triplet loss:
+Learning objective is to train CNN network by minimizing triplet loss.
+A triplet is anchor image (A), positive image (P) and negative image (N).
 d(A,P) + alpha <= d(A,N)
 Loss(A, P, N) = max((d(A,P) - d(A,N) + alpha), 0)
 
 The best way is choosing A,P,N so that P and N are very similar to each other
 for training. So it is harder to train.
 The model will need to adjust alpha to make d(A,P) and d(A,N) distinguishable.
-Schroff et al 2015. FaceNet: A unified embedding for face recognition ...
+That is also the purpose of using alpha.
 
-22. Face verification:
+Schroff et al 2015. FaceNet: A unified embedding for face recognition and
+clustering
+
+22. Face verification by supervised learning:
 Build a CNN network combining of two siamese networks,
 each siamese network will receive an image as its input.
-final output is softmax 1 classifies these two images are similar or not.
+final output is binary classification saying these two images are similar or not.
 
 image 1 -> siamese network 1 |
-                             |=> combine -> softmax 1 -> 0 (not similar) or 1 (similar)
+                             |=> logistic regression 1 -> 0 (not similar) or 1 (similar)
 image 2 -> siamese network 2 |
 
-23. Neuron style transfer:
+At training step, set of two images will be used for training.
+At prediction step, one image (eg, image 2) will be precomputed. So to predict if
+image 1 is same as image 2, we will just input one image (eg, image 1) to the
+model to run prediction.
+
+Taigman et al. 2014 DeepFace closing the gap to human level performance
+
+23. Neural style transfer:
 content image C, style image S, generated image G
 Zeiler and Fergus 2013. Visualizing and understanding CNN ...
 
-image G is generated randomly,
-use gradient descent to minimize J(G)
+image G is generated randomly, use gradient descent to minimize J(G), so training
+will update pixel value of image G.
+J-content(C,G): distance between C and G
+J-style(S,G): distance between S and G
 loss function J(G) = alpha.J-content(C,G) + beta.J-style(S,G)
 G = G - (alpha/2G)J(G)
 
@@ -318,14 +330,16 @@ Define style as correlation between activations across channels.
 (How correlated are the activations across different channels?)
 
 Style matrix:
-Let a[l]i,j,k = activation at (i=nh, j=nw, k=nc).
+a[l]i,j,k = activation at (i=nh, j=nw, k=nc)
 G[l] is nc[l] x nc[l]
 
-G[l]k,k' of S = sum sum (a[l]i,j,k(S) . a[l]i,j,k'(S))
+G[l]k,k' of S = sum-i of (sum-j of ((a[l]i,j,k(S) . a[l]i,j,k'(S))))
 
-G[l]k,k' of G = sum sum (a[l]i,j,k(G) . a[l]i,j,k'(G))
+G[l]k,k' of G = sum-i of (sum-j of ((a[l]i,j,k(G) . a[l]i,j,k'(G))))
 
-J-style(S,G)[l] = 1/square(2.nh[l].nw[l].nc[l])(norm 2 of ||G[l](S) - G[l](G)||)
+=> how correlated between channel k and channel k'
+
+J-style(S,G)[l] = 1/square(2.nh[l].nw[l].nc[l]) sum-k of (sum-k' of (G[l](S) - G[l](G)))
 
 Gatys et al 2015. A neural algorithm of artistic style
 
