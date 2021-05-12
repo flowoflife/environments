@@ -577,28 +577,6 @@ input | ------> tranpose convolution --------> | CONV 1 x 1 x nc classes -> outp
 
 Ronneberger et al 2015 U-Net: Convolutional Networks for Biomedical Image segmentation
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ====================
 References:
 ====================
@@ -634,3 +612,5 @@ Convolutional neural networks for artistic style transfer
 TensorFlow Implementation of "A Neural Algorithm of Artistic Style"
 V​ery Deep Convolutional Networks For Large-Scale Image Recognition (Simonyan & Zisserman, 2015)
 Pretrained models (MatConvNet)
+
+END!
