@@ -134,6 +134,11 @@ z[l+2] and a[l] need to have the same dimension.
 for that Ws is used to make them to have same dimension.
 => a[l+2] = g(z[l+2] + Ws.a[l])
 
+- The skip-connection makes it easy for the network to learn an identity mapping
+between the input and the output within the ResNet block.
+- Using a skip-connection helps the gradient to backpropagate and thus helps you
+to train deeper networks
+
 He et al., 2015. Deep residual networks ...
 
 8. 1 x 1 Convolution:
@@ -381,9 +386,9 @@ Sandler et al 2019, MobileNetV2: Inverted Residuals and Linear Bottlenecks
 In Depthwise Separable Convolution you:
 - Perform two steps of convolution.
 - You convolve the input image with nc number of nh x nw filters (nc is the number
-of color channels of the input image)
+of color channels of the input image).
 - The final output is of the dimension nout x nout x nc' (where nc' is the number of
-filters used in the previous convolution step)
+filters used in the previous convolution step).
 - For the “Depthwise” computations each filter convolves with only one corresponding
 color channel of the input image.
 

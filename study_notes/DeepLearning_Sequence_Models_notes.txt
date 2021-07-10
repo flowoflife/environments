@@ -1,0 +1,373 @@
+Deep Learning Specialization (Coursera, Andrew Ng)
+Sequence Models
+
+Noted by Phan Hoang Phuong
+2021 May 16
+
+
+1. Notation
+
+Set size of vocabulary pool, eg 10000.
+Each word will be asigned by one number in [1, 10000].
+Each word will be represented as one vetor of 10000 in size.
+
+For example:
+The word "Peter" has number or position 678th in [1, 10000].
+In vector of the word "Peter", all will be set as zero,
+but one at the position 678th of the vector.
+
+
+2. RNN:
+
+Forward propagation updates weights to predict y better
+a<0> + x<t> -> a<t> + y<t>
+
+a: activation
+x: input
+y: prediction
+
+Backward propagation update weights via Loss function to predict y better
+
+Different RNN architectures:
+- many to many
+- many to one
+- one to one
+
+when training a very deep RNN, there are vanishing gradient or exploding gradient
+problems with the derivative, either decreases exponentially or grows exponentially.
+(=> during backpropagation, it is difficult to update weights of the early neural
+network layers.)
+
+
+3. Gated Recurrent Unit (GRN):
+
+c: memory cell
+G: gate parameter
+
+GRN has c<t> candidate = a memory cell which has all weights of a<t> (output activation)
+
+GRN simple: c<t> candidate = tanh(Wc[c<t-1>, x<t>] + bc)
+
+Update Gate = Gamma update = Gu = sigmoid(Wc[c<t-1>, x<t>], + bu)
+
+c<t> actual = Gu * c<t> candidate + (1 - Gu) * c<t-1>
+
+Gu = 0 => no update, keep the same as c<t-1>
+Gu = 1 => update c<t> using c<t> candidate
+
+Full GRN: c<t> candidate = tanh(Wc[Gr * c<t-1>, x<t>] + bc)
+
+Relevant Gate = Gr = sigmoid(Wr[c<t-1>, x<t>] + br)
+
+
+4. LSTM:
+
+One block of LSTM has:
+
+c<t> candidate = tanh(Wc[a<t-1>, x<t>] + bc)
+
+Update Gate = Gu = sigmoid(Wu[a<t-1>, x<t>] + bu)
+
+Forget Gate = Gf = sigmoid(Wf[a<t-1>, x<t>] + bf)
+
+Output Gate = Go = sigmoid(Wo[a<t-1>, x<t>] + bo)
+
+=> c<t> actual = Gu * c<t> candidate + Gf * c<t-1>
+
+=> a<t> = Go * tanh(c<t> actual)
+
+=> y<t> = softmax(a<t>)
+
+
+5. Bidirectional RNN (BRNN):
+
+To predict one current value of y<t>, it uses both forward and backward activations.
+
+y<t> = g(Wy[a<t> forward, a<t> backward] + by)
+
+
+6. Deep RNN:
+
+l: layer
+t: time
+a: activation
+W: weights
+g: activation function
+
+a[l]<t> = g(Wa[l][a[l]<t-1>, a[l-1]<t>] + ba[l])
+
+=> different to full connected deep neural network
+
+7. Word Presentation and Word Embedding:
+
+With a pool of 10000 words or vocabulary.
+Each word in this pool will be presented as one hot vector.
+If the word is at the 323rd position in the pool, then its one hot vector will have
+all 0, and 1 at the 323rd position (O-323, O means one hot vector).
+
+If we represent a word by 300 features such as gender, royal, age, etc., then the
+10000 word pool will be a matrix of (300, 10000). So we say a word is embedded in
+the matrix of (300, 10000), or representing 10000 word pool by 300 features is called
+word embedding.
+
+A dot product of one hot vector of a word (1, 10000) with the word embedding
+matrix (300, 10000) will give a embedding vector (1, 300) representing all features
+of a word.
+
+Word embedding is useful to find analogies of words. For example, to find a word
+which is different with the word King in gender, we can try to find the highest
+similarity of the distance between that word and King, with the distance of two
+words Man and Woman.
+
+max of sim(e of word, (e of king - e of man + e of woman))
+e is a embedding vector
+(cosine similarity of two vectors is the angle of those two vectors)
+
+Notice the Bias problems of word embeddings relating to gender, ethnicity, age,
+sexual orientation, etc.
+
+In the word2vec algorithm, you estimate P(t∣c), where tt is the target word and
+c is a context word. c and t are chosen to be nearby words.
+
+
+8. Skip grams and Negative sampling algorithms:
+
+Skip grams: use one word in a sentence as an input to predict a target word,
+ and this target word could be not the word next to the input word in the sentence.
+
+Negative sampling: input is a set of two words which include a target word and its
+context word, for example Orange Juice. This is a correct set of two words so it
+will be predicted as 1 or true. Choose several other random sets of this target word
+with other non-matched context words, for example Car Juice, and use these as
+input, and predict result are zero or false. This simple algorith is faster than
+skip grams algorithm to predict a target word.
+
+
+9. GloVe (global vectors for word representation)
+
+Xij is number of time target word j matched meaningfully with context word i in
+a sentence.
+
+In simplified way, GloVe algorith tries to minimize the dot product of i vector
+with j vector which subtracts the log of Xij.
+
+10. Sentiment classification:
+
+Calculate an embedding vector for each word in a sentence. Average these embedding
+vectors, put into a softmax to predict one of five classes (equal to 1 to 5 stars),
+to show like or dislike level.
+
+Or using many to one approach of RNN, in which just feed embedding vectors into
+RNN, finally to a softmax to predict one of five classes.
+
+
+10. Sequence to Sequence model:
+
+- Machine translation model: converts a sequence of text input in one language to
+ another sequence of text in another language (Encode - Decode). In face, it is
+ a "Conditional Language Model" which predicts the probability of an output depending
+ on an input as a condition arg max of P(y<1>, y<2>,...y<ty> | x<1>, x<2>,...x<tx>).
+
+ So it finds the most likely translation.
+
+- Image caption: converts an image input to a sequence of text explaining meaning
+or content of the image.
+
+11. Beam Search:
+
+Use beam search to try to maximize P(y|x)
+
+arg max (or sum of log of) P(y<t> | x, y<1>,...,y<t-1>)
+
+- Refinements to Beam search (B value of Beam search)
+Large B -> better result, but slower
+Small B -> worse result, but faster
+
+Compared with other algorithms, Beam search runs faster but is not guaranteed to
+find exact maximum for arg max P(y|x).
+
+- Error analysis of Beam Search:
+
+A translation example: Jane visite l'Afrique en septembre (French)
+RNN translation: Jane visits Africa in September P(y*|x)
+Beam search optimization: Jane visited Africa last September P(y hat|x)
+
+Translation by algorithm is done by RNN output P(y*|x), then Beam search
+will maximize it, giving P(y hat|x). So Beam search chose wrongly. In fact,
+P(y*|x) > P(y hat|x). So Beam search is at fault. -> should improve Beam search.
+
+However, if in fact P(y*|x) <= P(y hat|x). RNN output is P(y*|x),
+then RNN is at fault. -> should improve RNN.
+
+12. Bleu score (bilingual evaluation understudy):
+
+Papineni et al 2002
+
+It is used to evaluate machine translation.
+
+pn = bleu score on n-grams only
+
+combined Bleu score: BP x exp(1/n x sum of pn), for n = 1,...,n
+BP = brevity penalty
+
+
+13. Attention Model:
+
+It looks at a part of a sentence at a time.
+
+Bahdanau et al 2014 neural machine translation by jointly learning to align and translate
+Xu et al 2015 Show, attend and tell: Neural image caption generation with visual attention
+
+It uses an alpha parameter to calculate the context value c, then the context c will
+be used to calculate next output. The alpha parameter of each word shows how much
+that word and its nearby words give attention to the context c.
+
+a<t'> = (a<t'> forward, a<t'> backward)
+
+sum of alpha<1, t'> = 1
+
+c<i> = sum of alpha<i, t'> . a<t'>
+
+alpha<t, t'> = amount of attention y<t> should pay to a<t'>
+
+alpha<t, t'> = exp(e<t, t'>) / sum of exp(e<t, t'>) with t' = 1 to Tx
+
+negative point: calculation cost of alpha
+
+
+14. Speech Recognition:
+
+audio clip x input -> transcrip y output
+
+100,000 hours of audio clips to train speech recognition model (using attention model)
+
+Connectionist temporal classification (CTC) cost for speech recognition
+
+Basic rule: collapse repeated characters not separated by blank
+
+Graves et al 2006 Connectionist Temporal Classification: Labelling unsegmented ...
+
+- Trigger word detection algorithm will output zero (to train with target label as
+zero) for the trigger words such as alexa, xiaodunihao, hey seri, okey google.
+This algorithm is still evolving.
+
+15. Transformer:
+
+Transformer Network methodology is taken from Convolutional Neural Network style
+of processing and Attention mechanism.
+
+Ref: Vaswani et al. 2017, Attention Is All You Need
+
+15.1 Self-Attention:
+
+Attention A<i> of each word <i> in a sentence will be calculated.
+
+A(q, K, V) = attention based vector representation of a word
+
+q or Q = interesting questions about the words in a sentence
+K = qualities of words given a Q
+V = specific representations of words given a Q
+
+q, K, V are calculated by these formulas.
+
+q<i> = Query = Wq . X<i> (a dot product)
+K<i> = Key = Wk . X<i>
+V<i> = Value = Wv . X<i>
+X<i> = vector of word <i>
+
+A<i>(q<i>, K<i>, V<i>) = sum by j((exp(q<i>.K<j>)/sum by j(exp(q<i>.K<j>))).V<j>)
+
+or
+
+Attention(Q, K, V) = softmax((Q.K-transpose/square(𝑑𝑘)) + M) * V
+
+𝑀 is the optional mask you choose to apply, either padding or look-ahead types
+𝑑𝑘 is the dimension of the keys (K), which is used to scale everything down so
+the softmax doesn't explode
+
+example one sentence below
+
+Jane              visite           l'Afrique         en                sebtembre
+X<1>               X<2>             X<3>             X<4>              X<5>
+
+from X<i> above, use Wq, Wk, Wv to calculate q, K, V below
+q<1>,K<1>,V<1>    q<2>,K<2>,V<2>   q<3>,K<3>,V<3>    q<4>,K<4>,V<4>    q<5>,K<5>,V<5>
+
+next calculate A<3> of the word l'Afrique as below
+
+first calculate:
+softmax(q<3>.K<1>).V<1>, softmax(q<3>.K<2>).V<2>, softmax(q<3>.K<3>).V<3>,
+softmax(q<3>.K<4>).V<4>, softmax(q<3>.K<5>).V<5>
+
+then sum of all of above will give A<3>
+
+=> The concept of Self-Attention is that: Given a word, its neighbouring words
+are used to compute its context by summing up the word values to map the Attention
+related to that given word.
+
+15.2 Multi-Head Attention:
+
+For each single word, it is needed to ask several questions about this word.
+e.g: what is happenning?, where?, who? ect ...
+
+Each question for this single word will be calculated as an Attention, or a Head.
+So after serveral question calculations, we will calculate its Multi-Head Attention,
+by concatination these Heads. Each Head represents a feature of the word.
+
+Multi-Head Attention for one single word = concat(head-1, head-2,..., head-n).Wo
+
+head<i> = Attention<i>(Wq<i>.Q, Wk<i>.K, Wv<i>.V) of a single word
+
+These Wq<i>, Wk<i>, Wv<i> are not the same as in 15.1 Self-Attention
+i here represents the computed attention weight matrix associated with the i-th “head” (sequence)
+
+example:
+
+Jane              visite           l'Afrique         en                sebtembre
+->
+X<1>               X<2>             X<3>             X<4>              X<5>
+->
+q<1>,K<1>,V<1>    q<2>,K<2>,V<2>   q<3>,K<3>,V<3>    q<4>,K<4>,V<4>    q<5>,K<5>,V<5>
+->
+Wq<i>.q<1>, Wk<i>.K<1>, Wv<i>.V<1>
+Wq<i>.q<2>, Wk<i>.K<2>, Wv<i>.V<2>
+Wq<i>.q<3>, Wk<i>.K<3>, Wv<i>.V<3>
+Wq<i>.q<4>, Wk<i>.K<4>, Wv<i>.V<4>
+Wq<i>.q<5>, Wk<i>.K<5>, Wv<i>.V<5>
+
+
+15.3 Transformer network (for translation):
+For example, translation from French to English
+
+Transformer network = Encoder block + Decoder block
+
+Encoder block:
+each word in French language as input for training
+Input: Multi-head attention(Q, K, V), Position encoding vector, Add & Norm
+feed into Feed Forward Neural Network N times (N=6)
+Output: K, V will be passed to Decoder block
+
+Decode block:
+Each word in English language as input for training
+Input: Masked Multi-head attention(Q, K, V) get output Q,
+with K, V from Encoder -> multi-head attention, Add & Norm,
+-> feed into Feed Forward Neural Network N times (N=6)
+-> Add & Norm
+-> Linear -> softmax
+Output: a word in English language
+
+- Position Encoding Vector:
+Each word has a position in a sentence.
+This position will be presented as a vector.
+This vector has size of 4 (d=4), or it has 4 values.
+i=0, i=1, i=2, i=3 are to show positions of 4 values of this vector.
+
+These 4 values of this position vector will be calculated
+using formulas below. These values will be small between -1 and 1.
+
+PE(pos, 2i) = sin(pos/(10000**((2*(i//2))/d)))
+PE(pos, 2i+1) = cos(pos/(10000**((2*(i//2))/d)))
+with d=4, i=[0,3], pos is position of the word in sentence
+
+==============================
+END!
